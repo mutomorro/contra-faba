@@ -1,49 +1,63 @@
 @import "tailwindcss";
 
-/*
- * Contra Faba Brand Tokens
- * ========================
- * Colours extracted from the current contrafaba.com site.
- * TODO: Confirm exact hex values with Jamie.
- */
+/* ============================================
+   CONTRA FABA - Brand Design Tokens
+   Tailwind CSS v4 Theme Configuration
+   Updated: 25 Mar 2026
+   Font: Poppins | Orange: #F04E23 (bright)
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  /* Brand colours */
-  --color-brand-navy: #1a1f2e;
-  --color-brand-charcoal: #2a2f3e;
-  --color-brand-slate: #4a5568;
-  --color-brand-gold: #c9a84c;
-  --color-brand-gold-light: #d4b96a;
-  --color-brand-white: #ffffff;
-  --color-brand-off-white: #f7f8fa;
-  --color-brand-light-grey: #e2e8f0;
-  --color-brand-mid-grey: #94a3b8;
+  /* Brand Colours */
+  --color-peach: #FAEADB;
+  --color-peach-light: #FDF5ED;
+  --color-peach-dark: #F0D8C0;
+  --color-teal: #143D3D;
+  --color-teal-light: #1A5050;
+  --color-teal-dark: #0E2C2C;
+  --color-orange: #F04E23;
+  --color-orange-light: #F46E4A;
+  --color-orange-dark: #D43D15;
+  --color-mustard: #D4952B;
+  --color-mustard-light: #E0A840;
+  --color-mustard-dark: #B37D1F;
 
-  /* Semantic colours */
-  --color-background: var(--color-brand-white);
-  --color-background-dark: var(--color-brand-navy);
-  --color-background-alt: var(--color-brand-off-white);
-  --color-foreground: var(--color-brand-navy);
-  --color-foreground-light: var(--color-brand-slate);
-  --color-foreground-on-dark: var(--color-brand-white);
-  --color-accent: var(--color-brand-gold);
-  --color-accent-hover: var(--color-brand-gold-light);
-  --color-border: var(--color-brand-light-grey);
+  /* Text - ink at varying opacity, no grey */
+  --color-ink: #1A1A1A;
+  --color-cream: #FFFAF5;
+  --color-white: #FFFFFF;
 
   /* Typography */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Poppins', sans-serif;
 
-  /* Spacing scale */
+  /* Spacing */
   --spacing-section: 6rem;
   --spacing-section-sm: 4rem;
 
-  /* Container */
-  --container-max: 1200px;
+  /* Border radius */
+  --radius-card: 1rem;
+  --radius-button: 0.5rem;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(20, 61, 61, 0.08);
+  --shadow-card-hover: 0 8px 40px rgba(20, 61, 61, 0.12);
 }
 
-/* Base styles */
+/* ============================================
+   Base Styles
+   ============================================ */
+
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -51,53 +65,200 @@
   }
 
   body {
-    font-family: var(--font-sans);
-    color: var(--color-foreground);
-    background-color: var(--color-background);
-    line-height: 1.6;
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+    line-height: 1.7;
+    font-weight: 400;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    color: var(--color-ink);
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   h2 {
-    font-size: 2.25rem;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
   }
 
   p {
+    font-size: 1rem;
+    color: var(--color-ink);
+    opacity: 0.65;
     max-width: 65ch;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--color-peach);
+    color: var(--color-teal);
   }
 }
 
-/* Component utilities */
+/* ============================================
+   Component Styles
+   ============================================ */
+
 @layer components {
-  .container-site {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-inline: 1.5rem;
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background-color: var(--color-teal);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-button);
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-teal);
+    cursor: pointer;
   }
 
-  .section-padding {
-    padding-block: var(--spacing-section);
+  .btn-primary:hover {
+    background-color: var(--color-teal-light);
+    border-color: var(--color-teal-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(20, 61, 61, 0.2);
   }
 
-  .section-padding-sm {
-    padding-block: var(--spacing-section-sm);
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background-color: transparent;
+    color: var(--color-teal);
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-button);
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-teal);
+    cursor: pointer;
   }
 
-  .text-balance {
-    text-wrap: balance;
+  .btn-secondary:hover {
+    background-color: var(--color-teal);
+    color: var(--color-white);
+    transform: translateY(-1px);
   }
+
+  .section-label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-orange);
+    margin-bottom: 1rem;
+  }
+
+  .service-card {
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(20, 61, 61, 0.06);
+    box-shadow: var(--shadow-card);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .client-card {
+    background: var(--color-peach);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .client-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+/* ============================================
+   Organic Blob Animations
+   ============================================ */
+
+@layer utilities {
+  .blend-multiply {
+    mix-blend-mode: multiply;
+  }
+
+  /* Slow organic float - each blob drifts on its own path */
+  @keyframes blob-float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(12px, -18px) scale(1.02) rotate(2deg); }
+    50% { transform: translate(-8px, 10px) scale(0.98) rotate(-1deg); }
+    75% { transform: translate(15px, 8px) scale(1.01) rotate(1deg); }
+  }
+
+  @keyframes blob-float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-15px, 10px) scale(0.98) rotate(-2deg); }
+    50% { transform: translate(10px, -14px) scale(1.03) rotate(1deg); }
+    75% { transform: translate(-8px, -6px) scale(0.99) rotate(-1deg); }
+  }
+
+  @keyframes blob-float-3 {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    33% { transform: translate(8px, -12px) scale(1.01) rotate(1.5deg); }
+    66% { transform: translate(-10px, 6px) scale(0.99) rotate(-1.5deg); }
+  }
+
+  @keyframes blob-float-4 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    20% { transform: translate(-10px, -15px) scale(1.02); }
+    40% { transform: translate(8px, 5px) scale(0.97); }
+    60% { transform: translate(12px, -8px) scale(1.01); }
+    80% { transform: translate(-5px, 12px) scale(0.99); }
+  }
+
+  .blob-animate-1 { animation: blob-float-1 18s ease-in-out infinite; }
+  .blob-animate-2 { animation: blob-float-2 22s ease-in-out infinite; }
+  .blob-animate-3 { animation: blob-float-3 25s ease-in-out infinite; }
+  .blob-animate-4 { animation: blob-float-4 20s ease-in-out infinite; }
+
+  /* Fade-in on load */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+  .animate-fade-up-delay-1 { animation: fade-up 0.8s ease-out 0.1s forwards; opacity: 0; }
+  .animate-fade-up-delay-2 { animation: fade-up 0.8s ease-out 0.2s forwards; opacity: 0; }
+  .animate-fade-up-delay-3 { animation: fade-up 0.8s ease-out 0.3s forwards; opacity: 0; }
+  .animate-fade-up-delay-4 { animation: fade-up 0.8s ease-out 0.4s forwards; opacity: 0; }
 }

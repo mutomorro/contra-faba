@@ -1,151 +1,150 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import SectionHeading from "@/components/SectionHeading";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { BlobMustard, BlobOrange1, BlobTeal } from '@/components/BlobShapes'
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: 'Services',
   description:
-    "Cost consultancy services including feasibility estimates, detailed cost estimates, quantity surveying, and contract administration.",
-};
+    'Our cost consultancy services: feasibility estimates, detailed cost estimates, quantity surveying, and contract administration.',
+}
 
 const services = [
   {
-    title: "Feasibility Estimates",
+    title: 'Feasibility Estimates',
+    subtitle: 'Is your project viable?',
     description:
-      "For when you want a ballpark estimate to check the feasibility of your project. We provide early-stage cost guidance to help you understand whether your project vision aligns with your budget, allowing informed decisions before committing significant resources.",
+      'For when you want a ballpark estimate to check the feasibility of your project. We provide early-stage cost guidance that helps you make informed decisions before committing significant resources.',
     features: [
-      "Early-stage budget assessment",
-      "High-level cost breakdown",
-      "Risk and contingency guidance",
-      "Budget viability report",
+      'High-level cost assessments',
+      'Budget benchmarking',
+      'Risk identification',
+      'Early-stage value engineering',
     ],
+    accent: 'bg-orange',
+    accentLight: 'bg-orange/10',
   },
   {
-    title: "Detailed Cost Estimates",
+    title: 'Detailed Cost Estimates',
+    subtitle: 'Know your numbers',
     description:
-      "For when you have detailed drawings and material specifications and need detailed costs. We produce comprehensive cost documents based on your design information, giving you the financial clarity needed to move forward with confidence.",
+      'For when you have detailed drawings and material specifications and need detailed costs. We break down every element of your project to give you a comprehensive, reliable cost picture.',
     features: [
-      "Full elemental cost breakdown",
-      "Material and labour cost analysis",
-      "Benchmark comparisons",
-      "Specification review",
+      'Elemental cost breakdowns',
+      'Material and labour pricing',
+      'Specification analysis',
+      'Cost comparison reports',
     ],
+    accent: 'bg-teal',
+    accentLight: 'bg-teal/10',
   },
   {
-    title: "Quantity Surveying",
+    title: 'Quantity Surveying',
+    subtitle: 'Full project oversight',
     description:
-      "For when you want someone to manage the whole process - from inception to completion. We provide end-to-end cost management, ensuring your project stays on budget throughout every stage of delivery.",
+      'For when you want someone to manage the whole process - from inception to completion. We provide comprehensive quantity surveying services that keep your project on track and on budget.',
     features: [
-      "Cost planning at each design stage",
-      "Tender documentation and analysis",
-      "Monthly valuations and reporting",
-      "Final account settlement",
+      'Bill of quantities preparation',
+      'Tender documentation',
+      'Interim valuations',
+      'Final account settlement',
     ],
+    accent: 'bg-mustard',
+    accentLight: 'bg-mustard/10',
   },
   {
-    title: "Contract Administration",
+    title: 'Contract Administration',
+    subtitle: 'Managing the process',
     description:
-      "For when you need someone to manage the contract management process for you. We administer the contract between you and your contractor, ensuring fair and transparent project delivery.",
+      'For when you need someone to manage the contract management process for you. We handle the complex administrative side so you can focus on delivering your project.',
     features: [
-      "Contract setup and management",
-      "Payment certification",
-      "Variation management",
-      "Dispute resolution support",
+      'Contract documentation',
+      'Variation management',
+      'Payment certification',
+      'Dispute resolution support',
     ],
+    accent: 'bg-orange',
+    accentLight: 'bg-orange/10',
   },
-];
+]
 
 export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-brand-navy text-white">
-        <div className="container-site py-20 md:py-28">
-          <p className="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">
-            Services
-          </p>
-          <h1 className="text-4xl md:text-5xl font-semibold text-balance max-w-3xl">
-            Tailored cost consultancy for every stage
-          </h1>
-          <p className="mt-6 text-lg text-white/70 leading-relaxed max-w-2xl">
-            We offer a range of services designed for architects, contractors
-            and homeowners to help them manage their project costs effectively.
+      <section className="relative py-24 lg:py-32 bg-peach overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <BlobMustard className="absolute -top-32 -right-20 w-[500px] h-[500px] text-mustard blend-multiply opacity-25 blob-animate-1" />
+          <BlobOrange1 className="absolute -bottom-32 -left-20 w-[400px] h-[400px] text-orange blend-multiply opacity-20 blob-animate-3" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+          <p className="section-label">Services</p>
+          <h1 className="mt-4 max-w-3xl">Expert cost consultancy, tailored to you</h1>
+          <p className="mt-6 text-lg max-w-2xl">
+            Whether you need a quick feasibility check or full project
+            management, we have the expertise to support you at every stage.
           </p>
         </div>
       </section>
 
-      {/* Services detail */}
-      <section className="section-padding">
-        <div className="container-site space-y-20">
-          {services.map((service, i) => (
-            <div
-              key={service.title}
-              className={`grid grid-cols-1 md:grid-cols-2 gap-12 items-start ${
-                i % 2 === 1 ? "md:direction-rtl" : ""
-              }`}
-            >
-              <div className={i % 2 === 1 ? "md:order-2" : ""}>
-                <div className="text-brand-gold font-semibold text-sm mb-3">
-                  {String(i + 1).padStart(2, "0")}
+      {/* Services List */}
+      <section className="py-24 lg:py-32 bg-cream">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="space-y-8">
+            {services.map((service) => (
+              <div
+                key={service.title}
+                className="service-card grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start"
+              >
+                <div className="lg:col-span-3">
+                  <div className={`w-3 h-3 rounded-full ${service.accent} mb-6`} />
+                  <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-2 !opacity-100">
+                    {service.subtitle}
+                  </p>
+                  <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
+                  <p className="leading-relaxed">{service.description}</p>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-semibold text-brand-navy mb-4">
-                  {service.title}
-                </h2>
-                <p className="text-brand-slate leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <Link
-                  href="/contact"
-                  className="text-brand-gold font-semibold text-sm hover:text-brand-gold-light transition-colors"
-                >
-                  Discuss this service &rarr;
-                </Link>
+                <div className="lg:col-span-2">
+                  <div className={`${service.accentLight} rounded-xl p-6`}>
+                    <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-4 !opacity-100">
+                      What&apos;s included
+                    </p>
+                    <ul className="space-y-3">
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3 text-sm">
+                          <span className={`w-1.5 h-1.5 rounded-full ${service.accent} mt-2 shrink-0`} />
+                          <span className="!opacity-70">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className={`bg-brand-off-white rounded-xl p-8 ${i % 2 === 1 ? "md:order-1" : ""}`}>
-                <h4 className="text-sm font-semibold uppercase tracking-wider text-brand-mid-grey mb-4">
-                  What&apos;s included
-                </h4>
-                <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-3 text-sm text-brand-slate"
-                    >
-                      <svg
-                        className="w-5 h-5 text-brand-gold shrink-0 mt-0.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-brand-off-white">
-        <div className="container-site section-padding text-center">
-          <SectionHeading
-            align="center"
-            title="Not sure which service you need?"
-            description="Get in touch and we'll help you work out the best approach for your project."
-          />
-          <Link
-            href="/contact"
-            className="inline-block bg-brand-gold text-brand-navy font-semibold px-8 py-3.5 rounded-md hover:bg-brand-gold-light transition-colors"
-          >
-            Talk to Us
-          </Link>
+      <section className="relative py-24 lg:py-32 bg-teal overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <BlobTeal className="absolute -bottom-20 -right-20 w-[400px] h-[400px] text-teal-light opacity-30 blob-animate-1" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 text-center">
+          <h2 className="!text-white max-w-2xl mx-auto">Not sure what you need?</h2>
+          <p className="mt-6 !text-white/60 max-w-lg mx-auto !opacity-100">
+            Every project is different. Get in touch and we&apos;ll help you
+            figure out the right approach for your specific situation.
+          </p>
+          <div className="mt-10">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-peach text-teal font-semibold text-sm tracking-widest uppercase rounded-lg hover:bg-white transition-all hover:shadow-lg"
+            >
+              Get in Touch
+            </Link>
+          </div>
         </div>
       </section>
     </>
-  );
+  )
 }
