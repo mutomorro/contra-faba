@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Company info */}
           <div className="lg:col-span-2">
             <Image
-              src="/images/Contra_Faba_Logo_White.png"
+              src="/images/logo-white.png"
               alt="Contra Faba"
               width={180}
               height={32}
