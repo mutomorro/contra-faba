@@ -25,7 +25,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/images/Contra_Faba_Logo.png"
+              src="/images/logo.png"
               alt="Contra Faba"
               width={180}
               height={32}
