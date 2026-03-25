@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* ============================================
@@ -6,8 +7,6 @@
    Updated: 25 Mar 2026
    Font: Poppins | Orange: #F04E23 (bright)
    ============================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @theme {
   /* Brand Colours */
