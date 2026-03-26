@@ -41,21 +41,21 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Oversized blobs anchored to the right side */}
+      {/* Oversized blobs anchored to the right side — vw units so they scale with viewport */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {/* Blob 1 - Teal (largest, top-right) */}
         <BlobTeal
-          className="absolute -top-[10%] -right-[12%] w-[500px] h-[500px] md:w-[580px] md:h-[580px] lg:w-[650px] lg:h-[650px] text-teal blend-multiply opacity-90 blob-animate-1"
+          className="absolute -top-[10%] -right-[8%] w-[min(35vw,900px)] h-[min(35vw,900px)] max-md:w-[300px] max-md:h-[300px] text-teal blend-multiply opacity-90 blob-animate-1"
         />
 
         {/* Blob 2 - Mustard (medium, mid-right) */}
         <BlobMustard
-          className="absolute top-[20%] -right-[8%] w-[420px] h-[420px] md:w-[480px] md:h-[480px] lg:w-[550px] lg:h-[550px] text-mustard blend-multiply opacity-85 blob-animate-2"
+          className="absolute top-[18%] -right-[5%] w-[min(30vw,780px)] h-[min(30vw,780px)] max-md:w-[260px] max-md:h-[260px] text-mustard blend-multiply opacity-85 blob-animate-2"
         />
 
         {/* Blob 3 - Orange (medium-large, bottom-right) */}
         <BlobOrange1
-          className="absolute -bottom-[8%] -right-[10%] w-[400px] h-[400px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] text-orange blend-multiply opacity-90 blob-animate-3"
+          className="absolute -bottom-[8%] -right-[6%] w-[min(28vw,720px)] h-[min(28vw,720px)] max-md:w-[240px] max-md:h-[240px] text-orange blend-multiply opacity-90 blob-animate-3"
         />
       </div>
     </section>
