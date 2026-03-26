@@ -13,9 +13,9 @@
   --color-peach: #FAEADB;
   --color-peach-light: #FDF5ED;
   --color-peach-dark: #F0D8C0;
-  --color-teal: #143D3D;
-  --color-teal-light: #1A5050;
-  --color-teal-dark: #0E2C2C;
+  --color-teal: #03333D;
+  --color-teal-light: #0A4A56;
+  --color-teal-dark: #022028;
   --color-orange: #F04E23;
   --color-orange-light: #F46E4A;
   --color-orange-dark: #D43D15;
@@ -245,10 +245,19 @@
     80% { transform: translate(-5px, 12px) scale(0.99); }
   }
 
-  .blob-animate-1 { animation: blob-float-1 18s ease-in-out infinite; }
-  .blob-animate-2 { animation: blob-float-2 22s ease-in-out infinite; }
-  .blob-animate-3 { animation: blob-float-3 25s ease-in-out infinite; }
+  .blob-animate-1 { animation: blob-float-1 12s ease-in-out infinite; }
+  .blob-animate-2 { animation: blob-float-2 15s ease-in-out infinite; }
+  .blob-animate-3 { animation: blob-float-3 18s ease-in-out infinite; }
   .blob-animate-4 { animation: blob-float-4 20s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob-animate-1,
+    .blob-animate-2,
+    .blob-animate-3,
+    .blob-animate-4 {
+      animation: none;
+    }
+  }
 
   /* Fade-in on load */
   @keyframes fade-up {
