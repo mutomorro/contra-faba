@@ -27,9 +27,9 @@ export default function Header() {
             <Image
               src="/images/logo.png"
               alt="Contra Faba"
-              width={180}
-              height={32}
-              className="h-7 w-auto"
+              width={540}
+              height={96}
+              className="h-20 w-auto"
               priority
             />
           </Link>
