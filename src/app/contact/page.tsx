@@ -20,8 +20,12 @@ export default function ContactPage() {
           <p className="section-label">Contact</p>
           <h1 className="mt-4 max-w-3xl">Let&apos;s talk about your project</h1>
           <p className="mt-6 text-lg max-w-2xl">
-            Whether you&apos;re at the start of a project or need help with one
-            already underway, we&apos;d love to hear from you.
+            Whether you&apos;re in the early planning stages or need expert cost
+            management support for an ongoing project, we&apos;re here to help.
+            Based in London and Glasgow, Contra Faba works with clients across
+            the South East, Scotland (including the Highlands), and beyond.
+            Reach out to discuss your project, ask a question, or find out how
+            we can support your vision.
           </p>
         </div>
       </section>
@@ -81,17 +85,31 @@ export default function ContactPage() {
               <h2 className="mb-8">Send us a message</h2>
               <div className="service-card">
                 <div className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      className="w-full px-4 py-3 rounded-lg border border-peach-dark/30 bg-white focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal text-sm"
-                      placeholder="Your name"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        className="w-full px-4 py-3 rounded-lg border border-peach-dark/30 bg-white focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal text-sm"
+                        placeholder="First name"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        className="w-full px-4 py-3 rounded-lg border border-peach-dark/30 bg-white focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal text-sm"
+                        placeholder="Last name"
+                      />
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -107,7 +125,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                      Phone (optional)
+                      Phone Number (optional)
                     </label>
                     <input
                       type="tel"
@@ -118,24 +136,20 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="type" className="block text-sm font-medium mb-2">
-                      I am a...
+                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                      Subject
                     </label>
-                    <select
-                      id="type"
-                      name="type"
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
                       className="w-full px-4 py-3 rounded-lg border border-peach-dark/30 bg-white focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal text-sm"
-                    >
-                      <option value="">Select an option</option>
-                      <option value="architect">Architect</option>
-                      <option value="contractor">Contractor</option>
-                      <option value="homeowner">Homeowner</option>
-                      <option value="other">Other</option>
-                    </select>
+                      placeholder="What is this about?"
+                    />
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Message
+                      Your Message
                     </label>
                     <textarea
                       id="message"

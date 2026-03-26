@@ -59,13 +59,47 @@ export default async function ProjectPage({ params }: Props) {
             <span>{project.title}</span>
           </nav>
 
-          {project.clientType && (
-            <p className="section-label">{project.clientType}</p>
+          {project.projectType && (
+            <p className="section-label">{project.projectType}</p>
           )}
           <h1 className="mt-4 max-w-3xl">{project.title}</h1>
           {project.summary && (
             <p className="mt-6 text-lg max-w-2xl">{project.summary}</p>
           )}
+
+          {/* Project details */}
+          <div className="mt-8 flex flex-wrap gap-6">
+            {project.location && (
+              <div>
+                <p className="text-xs font-semibold tracking-wider uppercase text-ink/40 !opacity-100">Location</p>
+                <p className="mt-1 font-medium">{project.location}</p>
+              </div>
+            )}
+            {project.budget && (
+              <div>
+                <p className="text-xs font-semibold tracking-wider uppercase text-ink/40 !opacity-100">Budget</p>
+                <p className="mt-1 font-medium">{project.budget}</p>
+              </div>
+            )}
+            {project.role && (
+              <div>
+                <p className="text-xs font-semibold tracking-wider uppercase text-ink/40 !opacity-100">Our Role</p>
+                <p className="mt-1 font-medium">{project.role}</p>
+              </div>
+            )}
+            {project.status && (
+              <div>
+                <p className="text-xs font-semibold tracking-wider uppercase text-ink/40 !opacity-100">Status</p>
+                <p className="mt-1 font-medium">
+                  {project.status === 'pre-construction'
+                    ? 'Pre-construction'
+                    : project.status === 'in-progress'
+                    ? 'In Progress'
+                    : 'Completed'}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 

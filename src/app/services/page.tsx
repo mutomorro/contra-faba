@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { BlobMustard, BlobOrange1, BlobTeal } from '@/components/BlobShapes'
 
 export const metadata: Metadata = {
   title: 'Services',
   description:
-    'Our cost consultancy services: feasibility estimates, detailed cost estimates, quantity surveying, and contract administration.',
+    'Our cost consultancy services: feasibility estimates, cost estimating, budget development, cost control, quantity surveying, and value engineering.',
 }
 
 const services = [
@@ -13,7 +14,7 @@ const services = [
     title: 'Feasibility Estimates',
     subtitle: 'Is your project viable?',
     description:
-      'For when you want a ballpark estimate to check the feasibility of your project. We provide early-stage cost guidance that helps you make informed decisions before committing significant resources.',
+      'Our Feasibility Estimates provide a preliminary look at project costs and financial viability, offering an early snapshot that helps determine if your project is worth pursuing. This service lays the groundwork by quickly assessing economic feasibility, so you can move forward with confidence.',
     features: [
       'High-level cost assessments',
       'Budget benchmarking',
@@ -22,12 +23,13 @@ const services = [
     ],
     accent: 'bg-orange',
     accentLight: 'bg-orange/10',
+    image: '/images/wordpress/Feasability-Estimates.png',
   },
   {
-    title: 'Detailed Cost Estimates',
+    title: 'Cost Estimating',
     subtitle: 'Know your numbers',
     description:
-      'For when you have detailed drawings and material specifications and need detailed costs. We break down every element of your project to give you a comprehensive, reliable cost picture.',
+      'Cost Estimating delivers a detailed forecast of project expenses based on a comprehensive analysis of materials, labour, and market conditions. By providing accurate, data-driven figures, this service helps you plan effectively and make informed decisions throughout the project lifecycle.',
     features: [
       'Elemental cost breakdowns',
       'Material and labour pricing',
@@ -36,34 +38,67 @@ const services = [
     ],
     accent: 'bg-teal',
     accentLight: 'bg-teal/10',
+    image: '/images/wordpress/Cost-Estimating.png',
+  },
+  {
+    title: 'Budget Development & Cost Planning',
+    subtitle: 'Plan with clarity',
+    description:
+      'Budget Development & Cost Planning creates a structured financial roadmap for your project, ensuring that funds are allocated efficiently at every stage. This service offers clarity and control over your budget, reducing the risk of unexpected expenses and keeping your project on track.',
+    features: [
+      'Structured financial roadmaps',
+      'Stage-by-stage fund allocation',
+      'Contingency planning',
+      'Cost benchmarking against targets',
+    ],
+    accent: 'bg-mustard',
+    accentLight: 'bg-mustard/10',
+    image: '/images/wordpress/Budget-Planning.png',
+  },
+  {
+    title: 'Cost Control & Monitoring',
+    subtitle: 'Stay on budget',
+    description:
+      'Cost Control & Monitoring focuses on tracking expenditures in real time, comparing actual spending against your planned budget. This proactive service enables timely adjustments, ensuring that your project remains financially sound from start to finish.',
+    features: [
+      'Real-time expenditure tracking',
+      'Budget vs actual reporting',
+      'Variance analysis',
+      'Timely corrective recommendations',
+    ],
+    accent: 'bg-orange',
+    accentLight: 'bg-orange/10',
+    image: '/images/wordpress/Cost-Control-Monitoring.png',
   },
   {
     title: 'Quantity Surveying',
     subtitle: 'Full project oversight',
     description:
-      'For when you want someone to manage the whole process - from inception to completion. We provide comprehensive quantity surveying services that keep your project on track and on budget.',
+      'Quantity Surveying involves the precise measurement and quantification of all project components, from materials to labour. By ensuring that every element is accurately accounted for, this service supports reliable budgeting and helps minimize waste.',
     features: [
       'Bill of quantities preparation',
       'Tender documentation',
       'Interim valuations',
       'Final account settlement',
     ],
-    accent: 'bg-mustard',
-    accentLight: 'bg-mustard/10',
+    accent: 'bg-teal',
+    accentLight: 'bg-teal/10',
+    image: '/images/wordpress/Limehouse108of2.jpg',
   },
   {
-    title: 'Contract Administration',
-    subtitle: 'Managing the process',
+    title: 'Value Engineering',
+    subtitle: 'Maximise your investment',
     description:
-      'For when you need someone to manage the contract management process for you. We handle the complex administrative side so you can focus on delivering your project.',
+      'Value Engineering is a strategic approach to enhancing your project\u2019s value by identifying cost-effective alternatives without sacrificing quality. Through detailed analysis and collaborative exploration, this service optimises design and construction decisions, maximising the overall return on your investment.',
     features: [
-      'Contract documentation',
-      'Variation management',
-      'Payment certification',
-      'Dispute resolution support',
+      'Cost-effective alternative analysis',
+      'Design optimisation reviews',
+      'Quality-cost balance assessment',
+      'Investment return maximisation',
     ],
-    accent: 'bg-orange',
-    accentLight: 'bg-orange/10',
+    accent: 'bg-mustard',
+    accentLight: 'bg-mustard/10',
+    image: '/images/wordpress/DSCF3829.jpg',
   },
 ]
 
@@ -80,8 +115,11 @@ export default function ServicesPage() {
           <p className="section-label">Services</p>
           <h1 className="mt-4 max-w-3xl">Expert cost consultancy, tailored to you</h1>
           <p className="mt-6 text-lg max-w-2xl">
-            Whether you need a quick feasibility check or full project
-            management, we have the expertise to support you at every stage.
+            At Contra Faba, we offer a comprehensive suite of cost consulting
+            solutions designed to guide your project from initial concept to
+            completion. Whether you&apos;re a contractor, architect, or homeowner,
+            our services provide clarity, control, and confidence in every stage
+            of your project.
           </p>
         </div>
       </section>
@@ -93,29 +131,41 @@ export default function ServicesPage() {
             {services.map((service) => (
               <div
                 key={service.title}
-                className="service-card grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start"
+                className="service-card overflow-hidden"
               >
-                <div className="lg:col-span-3">
-                  <div className={`w-3 h-3 rounded-full ${service.accent} mb-6`} />
-                  <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-2 !opacity-100">
-                    {service.subtitle}
-                  </p>
-                  <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
-                  <p className="leading-relaxed">{service.description}</p>
-                </div>
-                <div className="lg:col-span-2">
-                  <div className={`${service.accentLight} rounded-xl p-6`}>
-                    <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-4 !opacity-100">
-                      What&apos;s included
+                {service.image && (
+                  <div className="relative h-56 -mx-[2.5rem] -mt-[2.5rem] mb-8 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+                  <div className="lg:col-span-3">
+                    <div className={`w-3 h-3 rounded-full ${service.accent} mb-6`} />
+                    <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-2 !opacity-100">
+                      {service.subtitle}
                     </p>
-                    <ul className="space-y-3">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-sm">
-                          <span className={`w-1.5 h-1.5 rounded-full ${service.accent} mt-2 shrink-0`} />
-                          <span className="!opacity-70">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
+                    <p className="leading-relaxed">{service.description}</p>
+                  </div>
+                  <div className="lg:col-span-2">
+                    <div className={`${service.accentLight} rounded-xl p-6`}>
+                      <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-4 !opacity-100">
+                        What&apos;s included
+                      </p>
+                      <ul className="space-y-3">
+                        {service.features.map((feature) => (
+                          <li key={feature} className="flex items-start gap-3 text-sm">
+                            <span className={`w-1.5 h-1.5 rounded-full ${service.accent} mt-2 shrink-0`} />
+                            <span className="!opacity-70">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -16,9 +16,10 @@ export default function Footer() {
               className="h-7 w-auto mb-6"
             />
             <p className="text-white/60 text-sm leading-relaxed max-w-md !opacity-100">
-              Cost consultants for the construction industry. Working across
-              London, the South East and Scotland for architects, contractors
-              and homeowners.
+              We&apos;re cost consultants for the construction industry. Working
+              across London, the South East and Scotland for architects,
+              contractors and home owners. We help our clients manage their
+              projects and budgets effectively.
             </p>
 
             {/* Tech partners */}
@@ -27,9 +28,27 @@ export default function Footer() {
                 Technology Partners
               </p>
               <div className="flex items-center gap-6">
-                <span className="text-white/40 text-sm font-medium !opacity-100">CostX</span>
-                <span className="text-white/40 text-sm font-medium !opacity-100">BCIS</span>
-                <span className="text-white/40 text-sm font-medium !opacity-100">Monday.com</span>
+                <Image
+                  src="/images/wordpress/CostX-logo.png"
+                  alt="CostX"
+                  width={80}
+                  height={24}
+                  className="h-5 w-auto opacity-50"
+                />
+                <Image
+                  src="/images/wordpress/BCIS-logo.png"
+                  alt="BCIS"
+                  width={80}
+                  height={24}
+                  className="h-5 w-auto opacity-50"
+                />
+                <Image
+                  src="/images/wordpress/monday-logo.png"
+                  alt="Monday.com"
+                  width={80}
+                  height={24}
+                  className="h-5 w-auto opacity-50"
+                />
               </div>
             </div>
           </div>

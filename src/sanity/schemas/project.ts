@@ -31,6 +31,42 @@ export default defineType({
       },
     }),
     defineField({
+      name: "projectType",
+      title: "Project Type",
+      type: "string",
+      description: "e.g. Family Home, Spa, Couples Retreat",
+    }),
+    defineField({
+      name: "location",
+      title: "Location",
+      type: "string",
+      description: "e.g. London, Glasgow",
+    }),
+    defineField({
+      name: "budget",
+      title: "Budget",
+      type: "string",
+      description: "e.g. £1.5m, £900k",
+    }),
+    defineField({
+      name: "role",
+      title: "Role",
+      type: "string",
+      description: "e.g. Pre/Post Contract QS/CA",
+    }),
+    defineField({
+      name: "status",
+      title: "Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Pre-construction", value: "pre-construction" },
+          { title: "In Progress", value: "in-progress" },
+          { title: "Completed", value: "completed" },
+        ],
+      },
+    }),
+    defineField({
       name: "summary",
       title: "Summary",
       type: "text",
@@ -68,7 +104,7 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "clientType",
+      subtitle: "status",
       media: "featuredImage",
     },
   },

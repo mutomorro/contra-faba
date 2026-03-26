@@ -23,6 +23,11 @@ type Project = {
   title: string
   slug: { current: string }
   clientType?: string
+  projectType?: string
+  location?: string
+  budget?: string
+  role?: string
+  status?: string
   summary?: string
   featuredImage?: any
   publishedDate?: string
@@ -74,9 +79,33 @@ export default async function OurWorkPage() {
                       />
                     </div>
                   )}
-                  {project.clientType && (
-                    <p className="section-label !mb-2">{project.clientType}</p>
-                  )}
+                  <div className="flex items-center gap-3 mb-3 flex-wrap">
+                    {project.projectType && (
+                      <span className="text-xs font-semibold tracking-wider uppercase text-orange !opacity-100">
+                        {project.projectType}
+                      </span>
+                    )}
+                    {project.location && (
+                      <span className="text-xs text-ink/40 !opacity-100">
+                        {project.location}
+                      </span>
+                    )}
+                    {project.status && (
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full !opacity-100 ${
+                        project.status === 'completed'
+                          ? 'bg-teal/10 text-teal'
+                          : project.status === 'in-progress'
+                          ? 'bg-orange/10 text-orange'
+                          : 'bg-mustard/10 text-mustard-dark'
+                      }`}>
+                        {project.status === 'pre-construction'
+                          ? 'Pre-construction'
+                          : project.status === 'in-progress'
+                          ? 'In Progress'
+                          : 'Completed'}
+                      </span>
+                    )}
+                  </div>
                   <h3 className="mb-2">{project.title}</h3>
                   {project.summary && (
                     <p className="text-sm line-clamp-3">{project.summary}</p>
@@ -96,6 +125,63 @@ export default async function OurWorkPage() {
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Client Logos */}
+      <section className="py-24 lg:py-32 bg-peach-light">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <p className="section-label">Our clients</p>
+            <h2 className="mt-4">Trusted by leading practices</h2>
+          </div>
+
+          {/* Architect clients */}
+          <div className="mb-12">
+            <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-6 text-center !opacity-100">
+              Architects
+            </p>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-6 items-center justify-items-center">
+              {Array.from({ length: 14 }, (_, i) => (
+                <div key={`arch-${i}`} className="relative h-12 w-full flex items-center justify-center">
+                  <Image
+                    src={`/images/wordpress/arch-client-${String(i + 1).padStart(2, '0')}.png`}
+                    alt={`Architecture client ${i + 1}`}
+                    width={120}
+                    height={48}
+                    className="object-contain h-10 w-auto opacity-60 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Contractor clients */}
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-6 text-center !opacity-100">
+              Contractors
+            </p>
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
+              {[
+                'Maro-Construction-Logo.png',
+                'Eco-Construction-Scotland-Logo.png',
+                'Sygnet-Style-logo.png',
+                'Hawksmore-Construction-Logo.png',
+                'Highline-homes-logo.png',
+                'OakTree-Renovations-Logo.png',
+              ].map((logo, i) => (
+                <div key={logo} className="relative h-12 w-full flex items-center justify-center">
+                  <Image
+                    src={`/images/wordpress/${logo}`}
+                    alt={`Contractor client ${i + 1}`}
+                    width={120}
+                    height={48}
+                    className="object-contain h-10 w-auto opacity-60 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>
