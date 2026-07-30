@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Blob from '@/components/BlobShapes.astro'
+import { nav } from '@/lib/site'
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page doesn't exist. Use the links below to find what you were looking for."
+  noindex={true}
+>
+  <section class="relative flex min-h-[70vh] items-center overflow-hidden bg-peach py-24">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="orange1"
+        class="blob-animate-1 blend-multiply absolute -top-[35%] -right-[8%] h-[min(28vw,500px)] w-[min(28vw,500px)] text-orange opacity-80 max-lg:-top-[15%] max-lg:h-[200px] max-lg:w-[200px]"
+      />
+      <Blob
+        name="teal"
+        class="blob-animate-3 blend-multiply absolute -bottom-[42%] right-[8%] h-[min(22vw,380px)] w-[min(22vw,380px)] text-teal opacity-70 max-lg:hidden"
+      />
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
+      <p class="section-label">Error 404</p>
+      <h1 class="mt-4">We can&rsquo;t find that page</h1>
+      <p class="prose-muted mt-6 text-lg">
+        The page you were after has either moved or never existed. Here&rsquo;s
+        everything else on the site.
+      </p>
+
+      <ul class="mt-8 space-y-3">
+        {
+          nav.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="font-medium text-teal underline underline-offset-4 hover:text-orange-text"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

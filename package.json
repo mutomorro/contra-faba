@@ -1,32 +1,25 @@
 {
   "name": "contra-faba",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Contra Faba - cost consultants for the construction industry",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@sanity/image-url": "^2.0.3",
-    "@sanity/vision": "^5.18.0",
-    "next": "^16.2.1",
-    "next-sanity": "^12.1.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "sanity": "^5.18.0"
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.1.6",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
-    "@types/node": "^25.5.0",
-    "@types/react": "^19.2.14",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2"
+    "@astrojs/check": "^0.9.5",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,0 +1,150 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { site, address, offices } from '@/lib/site'
+
+/**
+ * DRAFT — requires review before go-live.
+ *
+ * This notice describes only what the site verifiably does: it collects the
+ * contact-form fields and nothing else. There is no analytics, no advertising
+ * and no tracking on the site, so nothing here claims otherwise.
+ *
+ * Items marked TO CONFIRM need a decision from Contra Faba and must not be
+ * published as-is.
+ */
+const lastUpdated = '30 July 2026'
+---
+
+<BaseLayout
+  title="Privacy Notice"
+  description="How Contra Faba collects and uses personal data submitted through this website."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Privacy Notice', path: '/privacy/' },
+  ]}
+>
+  <section class="bg-peach py-20 lg:py-24">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <p class="section-label">Legal</p>
+      <h1 class="mt-4">Privacy Notice</h1>
+      <p class="prose-muted mt-4 text-sm">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 lg:py-24">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <div
+        class="prose-muted space-y-6 [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:text-ink [&_h3]:mt-8 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:text-ink [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-2"
+      >
+        <div
+          class="rounded-xl border-2 border-orange/40 bg-orange/5 p-5 text-sm text-ink not-prose"
+        >
+          <strong>Draft for review.</strong> This notice has been prepared from what the
+          website technically does. Items marked <em>TO CONFIRM</em> need a decision from
+          Contra Faba, and the whole notice should be checked by someone qualified before
+          the site goes live.
+        </div>
+
+        <h2>Who we are</h2>
+        <p>
+          {site.legalName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is the data controller
+          for personal data submitted through this website. We are registered in {
+            site.companyJurisdiction
+          } under company number {site.companyNumber}, at {address.street}, {
+            address.locality
+          } {address.postalCode}.
+        </p>
+        <p>
+          For any question about this notice or about your personal data, contact us on {
+            offices[0].phone
+          } (London) or {offices[1].phone} (Glasgow).
+          <em>TO CONFIRM: an email address for data protection enquiries.</em>
+        </p>
+
+        <h2>What we collect</h2>
+        <p>
+          We collect only what you type into our contact form, and only when you choose
+          to submit it:
+        </p>
+        <ul>
+          <li>Your first and last name</li>
+          <li>Your email address</li>
+          <li>Your phone number, if you provide one (optional)</li>
+          <li>The subject and content of your message</li>
+        </ul>
+        <p>
+          We do not use analytics, advertising or tracking technologies on this site, and
+          we do not set cookies for those purposes. We do not buy or receive personal
+          data about you from third parties, and we do not build profiles of visitors.
+        </p>
+
+        <h2>Why we use it, and our lawful basis</h2>
+        <p>
+          We use the information solely to read and respond to your enquiry and, if it
+          leads to work, to discuss and deliver that work. Our lawful basis is
+          <strong>legitimate interests</strong> &mdash; responding to someone who has
+          deliberately contacted us about our services. Where an enquiry becomes a
+          project, our basis becomes <strong>performance of a contract</strong>.
+        </p>
+        <p>
+          We will not add you to a marketing list or send you unrelated material on the
+          strength of an enquiry.
+        </p>
+
+        <h2>Who processes it</h2>
+        <p>
+          This website is hosted by Netlify, which also handles contact-form
+          submissions on our behalf as a data processor. Submissions are stored in our
+          Netlify account and forwarded to us by email. Netlify may process data outside
+          the UK; where it does, that transfer relies on the safeguards Netlify has in
+          place for international transfers.
+        </p>
+        <p>
+          We do not sell your personal data or share it with anyone else, except where we
+          are required to by law.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          We keep enquiry correspondence only as long as we need it. <em
+            >TO CONFIRM: a retention period &mdash; commonly 12 or 24 months for
+            enquiries that do not become projects, and 6 years after completion for
+            project records, to match the limitation period for contractual claims.</em
+          >
+        </p>
+
+        <h2>Your rights</h2>
+        <p>Under UK data protection law you have the right to:</p>
+        <ul>
+          <li>ask for a copy of the personal data we hold about you</li>
+          <li>ask us to correct data that is wrong or incomplete</li>
+          <li>ask us to delete data we no longer have a reason to keep</li>
+          <li>object to, or ask us to restrict, our use of your data</li>
+          <li>ask us to transfer your data to you or another organisation</li>
+        </ul>
+        <p>
+          To exercise any of these, contact us using the details above. There is no
+          charge, and we will respond within one month.
+        </p>
+
+        <h2>Complaints</h2>
+        <p>
+          If you are unhappy with how we have handled your personal data, please tell us
+          first so we can try to put it right. You also have the right to complain to the
+          Information Commissioner&rsquo;s Office (ICO), the UK supervisory authority, at
+          <a
+            href="https://ico.org.uk/make-a-complaint/"
+            class="text-teal underline underline-offset-2"
+            rel="noopener">ico.org.uk/make-a-complaint</a
+          >.
+        </p>
+
+        <h2>Changes to this notice</h2>
+        <p>
+          If we change how we handle personal data, we will update this page and revise
+          the date at the top.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

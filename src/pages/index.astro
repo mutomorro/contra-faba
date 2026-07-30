@@ -1,0 +1,123 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Hero from '@/components/Hero.astro'
+import Blob from '@/components/BlobShapes.astro'
+import { site } from '@/lib/site'
+
+// The WordPress homepage advertised four "popular services" — a different set
+// from the six listed on /services/. That selection is data, not layout.
+const services = (await getCollection('services', ({ data }) => data.onHomepage)).sort(
+  (a, b) => a.data.order - b.data.order
+)
+
+const clients = [
+  {
+    title: 'Architects',
+    accent: 'bg-orange',
+    body: 'We integrate cost insights from the earliest design stages, ensuring that every aesthetic and functional decision aligns with your budget. Our proactive approach helps you balance innovation with practicality, so you can deliver designs that are both inspiring and economically viable.',
+  },
+  {
+    title: 'Contractors',
+    accent: 'bg-teal',
+    body: 'We work hand-in-hand with your team to identify cost-saving opportunities and maintain strict financial oversight throughout the project lifecycle. You gain the transparency and support needed to keep your projects on schedule and within budget.',
+  },
+  {
+    title: 'Home Owners',
+    accent: 'bg-mustard',
+    body: 'From initial feasibility studies to final cost control, our approach is designed to keep you informed and confident about your investment. We provide comprehensive guidance to ensure that every decision is made with clear financial insight, allowing you to realise your dream project with peace of mind.',
+  },
+]
+---
+
+<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description}>
+  <Hero />
+
+  <!-- Popular services -->
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto mb-16 max-w-2xl text-center">
+        <p class="section-label">What we do</p>
+        <h2 class="mt-4">Popular services</h2>
+        <p class="prose-muted mx-auto mt-4">
+          We offer a range of services designed for architects, contractors and home
+          owners to help them manage their project costs effectively.
+        </p>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          services.map((service) => (
+            <li class="card card-hover p-10">
+              <h3 class="mb-3">
+                <a href="/services/" class="hover:text-teal">
+                  {service.data.title}
+                </a>
+              </h3>
+              <p class="prose-muted text-sm leading-relaxed">
+                {service.data.homepageSummary ?? service.data.summary}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-12 text-center">
+        <a href="/services/" class="btn btn-secondary">All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we work with -->
+  <section class="bg-peach-light py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto mb-16 max-w-2xl text-center">
+        <p class="section-label">Who we work with</p>
+        <h2 class="mt-4">Tailored to your needs</h2>
+        <p class="prose-muted mx-auto mt-4">
+          We collaborate with a diverse range of clients including architects,
+          contractors, and home owners. Our adaptable approach ensures that regardless
+          of your role or project size, you receive expert guidance and personalised
+          attention.
+        </p>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {
+          clients.map((client) => (
+            <li class="card-peach p-10">
+              <span class={`mb-6 block h-3 w-3 rounded-full ${client.accent}`} aria-hidden="true" />
+              <h3 class="mb-4">{client.title}</h3>
+              <p class="prose-muted text-sm leading-relaxed">{client.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden bg-teal py-24 text-on-teal lg:py-32">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="teal"
+        class="blob-animate-1 absolute -top-20 -right-20 h-[400px] w-[400px] text-teal-light opacity-40"
+      />
+      <Blob
+        name="orange1"
+        class="blob-animate-2 absolute -bottom-20 -left-20 h-[300px] w-[300px] text-orange opacity-15"
+      />
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 text-center lg:px-8">
+      <h2 class="mx-auto max-w-2xl">Ready to take control of your project costs?</h2>
+      <p class="mx-auto mt-6 max-w-lg text-on-teal-muted">
+        Get in touch to discuss how we can help you manage your next project with
+        confidence.
+      </p>
+      <div class="mt-10">
+        <a href="/contact/" class="btn btn-on-teal">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

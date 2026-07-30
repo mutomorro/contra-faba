@@ -1,0 +1,142 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { Image } from 'astro:assets'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Blob from '@/components/BlobShapes.astro'
+import { statusLabels } from '@/lib/site'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await getCollection('projects')
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }))
+}
+
+const { project } = Astro.props
+const { data } = project
+
+// Case studies currently carry no body copy (the Sanity records had none), so
+// this renders nothing unless someone types below the frontmatter.
+const { Content } = await render(project)
+
+const facts = [
+  { label: 'Type', value: data.projectType },
+  { label: 'Location', value: data.location },
+  { label: 'Budget', value: data.budget },
+  { label: 'Our Role', value: data.role },
+  { label: 'Status', value: statusLabels[data.status] },
+]
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.summary.slice(0, 155)}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Our Work', path: '/our-work/' },
+    { name: data.title, path: `/our-work/${project.id}/` },
+  ]}
+>
+  <section class="relative overflow-hidden bg-peach py-20 lg:py-28">
+    <!-- Anchored right and bled off-canvas so they never sit under the copy.
+         Kept at high opacity: multiply-blending a brand colour at low opacity
+         over peach desaturates it to grey instead of reading as the colour. -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="orange1"
+        class="blob-animate-1 blend-multiply absolute -top-[40%] -right-[10%] h-[min(28vw,520px)] w-[min(28vw,520px)] text-orange opacity-80 max-lg:-top-[18%] max-lg:h-[220px] max-lg:w-[220px]"
+      />
+      <Blob
+        name="teal"
+        class="blob-animate-2 blend-multiply absolute -bottom-[48%] right-[6%] h-[min(22vw,400px)] w-[min(22vw,400px)] text-teal opacity-70 max-lg:hidden"
+      />
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-ink-muted">
+          <li><a href="/our-work/" class="hover:text-teal">Our Work</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-ink">{data.title}</li>
+        </ol>
+      </nav>
+
+      <p class="section-label">{data.projectType}</p>
+      <h1 class="mt-4 max-w-3xl">{data.title}</h1>
+      <p class="prose-muted mt-6 max-w-2xl text-lg leading-relaxed">{data.summary}</p>
+
+      <dl class="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+        {
+          facts.map((fact) => (
+            <div>
+              <dt class="text-xs font-semibold tracking-wider text-ink-muted uppercase">
+                {fact.label}
+              </dt>
+              <dd class="mt-1 font-medium">{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Featured image -->
+  <section class="bg-cream">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <Image
+        src={data.featuredImage}
+        alt={data.featuredImageAlt}
+        widths={[600, 900, 1400, 2000]}
+        sizes="(min-width: 1280px) 1216px, 100vw"
+        loading="eager"
+        class="-mt-10 aspect-16/9 w-full rounded-2xl object-cover shadow-lg"
+      />
+    </div>
+  </section>
+
+  <!-- Optional markdown body -->
+  <div class="bg-cream">
+    <div class="mx-auto max-w-3xl px-6 empty:hidden lg:px-8">
+      <div class="prose-muted space-y-6 py-16 empty:hidden lg:py-20">
+        <Content />
+      </div>
+    </div>
+  </div>
+
+  {
+    data.gallery && data.gallery.length > 0 && (
+      <section class="bg-cream pb-24 lg:pb-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <h2 class="mb-10 pt-16">Gallery</h2>
+          <ul class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {data.gallery.map((item) => (
+              <li>
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  widths={[600, 900, 1200]}
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
+                  class="aspect-4/3 w-full rounded-2xl object-cover"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-peach-light py-16">
+    <div class="mx-auto flex max-w-7xl flex-col items-start gap-6 px-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+      <a href="/our-work/" class="btn btn-secondary">&larr; Back to Our Work</a>
+      <a href="/contact/" class="btn btn-primary">Discuss your project</a>
+    </div>
+  </section>
+</BaseLayout>

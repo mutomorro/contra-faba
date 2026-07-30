@@ -1,0 +1,60 @@
+---
+import '@/styles/global.css'
+import Seo from '@/components/Seo.astro'
+import JsonLd from '@/components/JsonLd.astro'
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+
+interface Breadcrumb {
+  name: string
+  path: string
+}
+
+interface Props {
+  title: string
+  description: string
+  noindex?: boolean
+  breadcrumbs?: Breadcrumb[]
+}
+
+const { title, description, noindex, breadcrumbs } = Astro.props
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Self-hosted so there is no third-party font request blocking render. -->
+    <link
+      rel="preload"
+      href="/fonts/figtree-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#03333D" />
+
+    <Seo title={title} description={description} noindex={noindex} />
+    <JsonLd breadcrumbs={breadcrumbs} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1 pt-20">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

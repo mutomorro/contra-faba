@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Blob from '@/components/BlobShapes.astro'
+import { offices } from '@/lib/site'
+---
+
+<BaseLayout
+  title="Thank you"
+  description="Your enquiry has been received. We will be in touch shortly."
+  noindex={true}
+>
+  <section class="relative flex min-h-[70vh] items-center overflow-hidden bg-peach py-24">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="mustard"
+        class="blob-animate-2 blend-multiply absolute -top-[35%] -right-[8%] h-[min(28vw,500px)] w-[min(28vw,500px)] text-mustard opacity-80 max-lg:-top-[15%] max-lg:h-[200px] max-lg:w-[200px]"
+      />
+      <Blob
+        name="teal"
+        class="blob-animate-3 blend-multiply absolute -bottom-[42%] right-[8%] h-[min(22vw,380px)] w-[min(22vw,380px)] text-teal opacity-70 max-lg:hidden"
+      />
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
+      <p class="section-label">Message sent</p>
+      <h1 class="mt-4">Thank you &mdash; we&rsquo;ve got your enquiry</h1>
+      <p class="prose-muted mt-6 text-lg">
+        We&rsquo;ll review what you&rsquo;ve sent and come back to you shortly. If your
+        enquiry is urgent, it&rsquo;s always quicker to call.
+      </p>
+
+      <ul class="mt-8 space-y-2">
+        {
+          offices.map((office) => (
+            <li>
+              <span class="text-ink-muted">{office.city}:</span>{' '}
+              <a
+                href={`tel:${office.phoneHref}`}
+                class="font-medium text-teal underline underline-offset-4"
+              >
+                {office.phone}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/our-work/" class="btn btn-secondary">See Our Work</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

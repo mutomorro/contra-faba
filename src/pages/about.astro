@@ -1,0 +1,269 @@
+---
+import { Image } from 'astro:assets'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHero from '@/components/PageHero.astro'
+import Blob from '@/components/BlobShapes.astro'
+import approachImage from '@/assets/site/approach.jpg'
+import jamie from '@/assets/site/jamie-gould.png'
+import locations from '@/assets/site/locations.png'
+
+const clients = [
+  {
+    title: 'Architects',
+    accent: 'bg-orange',
+    body: 'At Contra Faba, we collaborate closely with architects to ensure your creative vision is supported by sound financial planning. We integrate cost insights from the earliest design stages, ensuring that every aesthetic and functional decision aligns with your budget. Our proactive approach helps you balance innovation with practicality, so you can deliver designs that are both inspiring and economically viable.',
+  },
+  {
+    title: 'Contractors',
+    accent: 'bg-teal',
+    body: 'For contractors, our services provide detailed cost breakdowns and robust budgeting strategies that empower you to submit competitive bids and manage resources effectively. We work hand-in-hand with your team to identify cost-saving opportunities and maintain strict financial oversight throughout the project lifecycle. With our clear communication and timely reporting, you gain the transparency and support needed to keep your projects on schedule and within budget.',
+  },
+  {
+    title: 'Home Owners',
+    accent: 'bg-mustard',
+    body: 'Understanding that home projects are deeply personal, we offer a friendly and transparent service tailored to your unique needs. From initial feasibility studies to final cost control, our approach is designed to keep you informed and confident about your investment. We provide comprehensive guidance to ensure that every decision — whether it’s a renovation or new construction — is made with clear financial insight, allowing you to realise your dream project with peace of mind.',
+  },
+]
+
+const values = [
+  {
+    title: 'Integrity',
+    accent: 'bg-teal',
+    body: 'We maintain the highest standards of honesty and transparency in every interaction.',
+  },
+  {
+    title: 'Collaboration',
+    accent: 'bg-orange',
+    body: 'We work closely with you, ensuring a seamless, cooperative process from start to finish.',
+  },
+  {
+    title: 'Innovation',
+    accent: 'bg-mustard',
+    body: 'We continuously seek smarter, more efficient ways to manage your costs.',
+  },
+  {
+    title: 'Client-Centricity',
+    accent: 'bg-teal',
+    body: 'Your goals are our goals, and we tailor every solution to meet your unique needs.',
+  },
+]
+
+const sustainability = [
+  {
+    title: 'Encouraging Sustainable Material Choices',
+    body: 'We actively promote the use of sustainable, locally sourced, and low-carbon materials by providing detailed cost comparisons and lifecycle assessments. By evaluating long-term value alongside upfront costs, we help clients make informed choices that reduce environmental impact without compromising quality.',
+  },
+  {
+    title: 'Reducing Construction Waste',
+    body: 'Effective cost planning goes hand-in-hand with waste reduction. We incorporate waste-conscious strategies in our estimating and quantity surveying processes to optimise material usage and minimise unnecessary waste. This not only lowers costs but also supports more sustainable construction practices.',
+  },
+  {
+    title: 'Supporting Energy Efficiency & Low-Carbon Solutions',
+    body: 'We encourage energy-efficient design and construction methods by advising on cost-effective ways to incorporate passive design principles, renewable technologies, and energy-saving solutions. Our goal is to help clients create buildings that perform better, cost less to operate, and have a reduced carbon footprint.',
+  },
+]
+---
+
+<BaseLayout
+  title="About"
+  description="Contra Faba is led by Jamie Gould, offering tailored cost consulting for contractors, architects and homeowners across London, the South East and Scotland."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about/' },
+  ]}
+>
+  <PageHero eyebrow="About us" title="About">
+    Founded on a passion for precision and a commitment to transparency, Contra Faba
+    began with a simple idea: effective cost management transforms projects. From
+    humble beginnings, we&rsquo;ve grown into a trusted partner for contractors,
+    architects, and homeowners, offering tailored cost consulting solutions that pave
+    the way for project success.
+  </PageHero>
+
+  <!-- Our approach -->
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div>
+          <p class="section-label">Our approach</p>
+          <h2 class="mt-4">Built on experience, driven by values</h2>
+          <div class="prose-muted mt-8 space-y-6">
+            <p>
+              At Contra Faba, we believe that great outcomes are achieved through open
+              communication and mutual trust. We take a hands-on, collaborative
+              approach &mdash; engaging with you from the initial consultation to the
+              final review &mdash; to ensure that every decision is informed by
+              accurate data and market insights.
+            </p>
+            <p>
+              Our friendly and professional team is dedicated to guiding you through
+              the complexities of cost management with clarity and care.
+            </p>
+          </div>
+        </div>
+        <div>
+          <Image
+            src={approachImage}
+            alt="A Contra Faba project under construction"
+            widths={[600, 900, 1200]}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            loading="lazy"
+            class="aspect-square w-full rounded-3xl object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership -->
+  <section class="bg-peach-light py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div class="order-2 lg:order-1">
+          <Image
+            src={jamie}
+            alt="Jamie Gould, founder of Contra Faba"
+            widths={[500, 1000]}
+            sizes="(min-width: 1024px) 480px, 100vw"
+            loading="lazy"
+            class="w-full max-w-md rounded-3xl bg-peach object-cover"
+          />
+        </div>
+        <div class="order-1 lg:order-2">
+          <p class="section-label">Leadership</p>
+          <h2 class="mt-4">Jamie Gould</h2>
+          <div class="prose-muted mt-8 space-y-6">
+            <p>
+              Contra Faba is led by Jamie Gould, whose passion for cost management and
+              commitment to excellence have been the driving force behind our work.
+            </p>
+            <p>
+              While Jamie is the primary consultant, he collaborates with a network of
+              experienced professionals, ensuring you benefit from a broad spectrum of
+              expertise &mdash; all while maintaining a personal touch.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we work with -->
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto mb-16 max-w-2xl text-center">
+        <p class="section-label">Who we work with</p>
+        <h2 class="mt-4">Tailored to your needs</h2>
+        <p class="prose-muted mx-auto mt-4">
+          We proudly collaborate with a diverse range of clients including architects,
+          contractors, and home owners. Our adaptable approach ensures that regardless
+          of your role or project size, you receive expert guidance and personalised
+          attention.
+        </p>
+      </div>
+
+      <ul class="space-y-6">
+        {
+          clients.map((client) => (
+            <li class="card p-10">
+              <span class={`mb-6 block h-3 w-3 rounded-full ${client.accent}`} aria-hidden="true" />
+              <h3 class="mb-3">{client.title}</h3>
+              <p class="prose-muted leading-relaxed">{client.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Where we work -->
+  <section class="bg-peach-light py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div>
+          <p class="section-label">Where we work</p>
+          <h2 class="mt-4">London, Glasgow &amp; beyond</h2>
+          <p class="prose-muted mt-8 leading-relaxed">
+            Based in London and Glasgow, Contra Faba serves clients throughout the
+            South East and extends its specialised services to Scotland, including the
+            Highlands. Our flexible approach enables us to bring our expertise to a
+            broad geographical area.
+          </p>
+        </div>
+        <div>
+          <Image
+            src={locations}
+            alt="Map showing Contra Faba's coverage from London and Glasgow"
+            widths={[600, 900, 1200]}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            loading="lazy"
+            class="w-full rounded-3xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto mb-16 max-w-2xl text-center">
+        <p class="section-label">Our values</p>
+        <h2 class="mt-4">What guides us</h2>
+        <p class="prose-muted mx-auto mt-4">
+          Our mission is to empower you with clear, actionable cost insights and
+          strategic planning that keep your projects on track. At the heart of our work
+          are our core values.
+        </p>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          values.map((value) => (
+            <li class="card p-10">
+              <span class={`mb-6 block h-3 w-3 rounded-full ${value.accent}`} aria-hidden="true" />
+              <h3 class="mb-3">{value.title}</h3>
+              <p class="prose-muted text-sm leading-relaxed">{value.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sustainability -->
+  <section class="relative overflow-hidden bg-teal py-24 text-on-teal lg:py-32">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="bean"
+        class="blob-animate-3 absolute -right-16 -bottom-16 h-[300px] w-[300px] text-teal-light opacity-30"
+      />
+    </div>
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl">
+        <p class="section-label-on-teal">Sustainability</p>
+        <h2 class="mt-4">Sustainability &amp; Sustainable Building Practices</h2>
+        <p class="mt-6 leading-relaxed text-on-teal-muted">
+          At Contra Faba, we recognise the critical role that cost consultants play in
+          promoting sustainable construction. We are committed to integrating
+          environmentally responsible practices into every project, ensuring that
+          sustainability is not just an aspiration but a tangible part of the building
+          process. Our approach balances cost efficiency with environmental impact,
+          helping clients achieve their sustainability goals while maintaining
+          financial feasibility.
+        </p>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {
+          sustainability.map((item) => (
+            <li class="rounded-xl border border-white/15 bg-white/5 p-8">
+              <h3 class="mb-3 text-lg font-semibold">{item.title}</h3>
+              <p class="text-sm leading-relaxed text-on-teal-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

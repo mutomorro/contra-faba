@@ -1,0 +1,437 @@
+@import 'tailwindcss';
+
+/* ============================================================================
+   CONTRA FABA — design tokens
+   Ported from the previous Next.js build, with two deliberate changes:
+
+   1. Text colour is now explicit tokens rather than a global `p { opacity }`.
+      The old stylesheet set `p { opacity: 0.65 }` and then ~30 `!opacity-100`
+      overrides across the page components fought it back. Muted text is now a
+      colour, so nothing needs overriding.
+
+   2. Small text uses --color-orange-text / on-teal tokens that meet WCAG AA.
+      Brand orange #F04E23 on peach is only 3.03:1, which fails for 12px labels.
+      The bright brand orange is retained for all graphics and accents.
+   ========================================================================= */
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/figtree-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/figtree-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@theme {
+  /* --- Brand palette --------------------------------------------------- */
+  --color-peach: #fce8db;
+  --color-peach-light: #fdf5ed;
+  --color-peach-dark: #f0d8c0;
+
+  --color-teal: #03333d;
+  --color-teal-light: #0a4a56;
+  --color-teal-dark: #022028;
+
+  --color-orange: #f04e23;
+  --color-orange-light: #f46e4a;
+  --color-orange-dark: #d43d15;
+
+  --color-mustard: #e4a108;
+  --color-mustard-light: #f0b52a;
+  --color-mustard-dark: #c48a06;
+
+  --color-cream: #fffaf5;
+
+  /* --- Text on light backgrounds --------------------------------------- */
+  /* #1a1a1a on cream = 16.4:1 | on peach = 14.2:1 */
+  --color-ink: #1a1a1a;
+  /* #57534e on cream = 7.2:1 | on peach = 6.3:1 (replaces ink @ 65% opacity) */
+  --color-ink-muted: #57534e;
+  /* Accessible orange for small text only. on peach = 5.0:1 | on cream = 5.7:1 */
+  --color-orange-text: #b83610;
+
+  /* --- Text on the teal background ------------------------------------- */
+  /* white on teal = 13.6:1 */
+  --color-on-teal: #ffffff;
+  /* #b4c7cb on teal = 7.7:1 (replaces white @ 60%) */
+  --color-on-teal-muted: #b4c7cb;
+  /* #8fa9af on teal = 5.5:1 (replaces white @ 30%, which failed AA) */
+  --color-on-teal-dim: #8fa9af;
+
+  /* --- Type ------------------------------------------------------------ */
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* --- Radii & shadows ------------------------------------------------- */
+  --radius-card: 1rem;
+  --radius-button: 0.5rem;
+
+  --shadow-card: 0 4px 24px rgb(3 51 61 / 0.08);
+  --shadow-card-hover: 0 8px 40px rgb(3 51 61 / 0.12);
+}
+
+/* ============================================================================
+   Base
+   ========================================================================= */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+  h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  h3 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--color-peach);
+    color: var(--color-teal);
+  }
+
+  /* Visible keyboard focus everywhere. The previous build had none. */
+  :focus-visible {
+    outline: 3px solid var(--color-orange);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================================================
+   Components
+   ========================================================================= */
+
+@layer components {
+  /* Body copy at the muted weight. Replaces the old global p-opacity rule. */
+  .prose-muted {
+    color: var(--color-ink-muted);
+    max-width: 65ch;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-button);
+    border: 2px solid var(--color-teal);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: var(--color-teal);
+    color: var(--color-on-teal);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-teal-light);
+    border-color: var(--color-teal-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgb(3 51 61 / 0.2);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-teal);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-teal);
+    color: var(--color-on-teal);
+    transform: translateY(-1px);
+  }
+
+  /* On the dark teal sections, the primary button inverts. */
+  .btn-on-teal {
+    background-color: var(--color-peach);
+    color: var(--color-teal);
+    border-color: var(--color-peach);
+  }
+
+  .btn-on-teal:hover {
+    background-color: var(--color-on-teal);
+    border-color: var(--color-on-teal);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+  }
+
+  .section-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-orange-text);
+  }
+
+  .section-label-on-teal {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-mustard-light);
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(3 51 61 / 0.06);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card-peach {
+    background: var(--color-peach);
+    border-radius: var(--radius-card);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .card-peach:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-ink);
+  }
+
+  .field-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+    background: #ffffff;
+    border: 1px solid rgb(3 51 61 / 0.2);
+    border-radius: var(--radius-button);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .field-input:hover {
+    border-color: rgb(3 51 61 / 0.35);
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: var(--color-teal);
+    box-shadow: 0 0 0 3px rgb(3 51 61 / 0.12);
+  }
+
+  .field-input:user-invalid {
+    border-color: var(--color-orange-dark);
+  }
+
+  .field-input:user-invalid:focus {
+    box-shadow: 0 0 0 3px rgb(212 61 21 / 0.15);
+  }
+
+  /* Keyboard-only skip link */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-teal);
+    color: var(--color-on-teal);
+    border-radius: var(--radius-button);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+/* ============================================================================
+   Blob animations — slow organic drift, disabled under reduced-motion
+   (handled by the global reduced-motion rule in @layer base)
+   ========================================================================= */
+
+@layer utilities {
+  .blend-multiply {
+    mix-blend-mode: multiply;
+  }
+
+  @keyframes blob-float-1 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    25% {
+      transform: translate(12px, -18px) scale(1.02) rotate(2deg);
+    }
+    50% {
+      transform: translate(-8px, 10px) scale(0.98) rotate(-1deg);
+    }
+    75% {
+      transform: translate(15px, 8px) scale(1.01) rotate(1deg);
+    }
+  }
+
+  @keyframes blob-float-2 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    25% {
+      transform: translate(-15px, 10px) scale(0.98) rotate(-2deg);
+    }
+    50% {
+      transform: translate(10px, -14px) scale(1.03) rotate(1deg);
+    }
+    75% {
+      transform: translate(-8px, -6px) scale(0.99) rotate(-1deg);
+    }
+  }
+
+  @keyframes blob-float-3 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    33% {
+      transform: translate(8px, -12px) scale(1.01) rotate(1.5deg);
+    }
+    66% {
+      transform: translate(-10px, 6px) scale(0.99) rotate(-1.5deg);
+    }
+  }
+
+  /* will-change is deliberately omitted: these are large painted areas and
+     promoting them to their own layers costs more than it saves. */
+  .blob-animate-1 {
+    animation: blob-float-1 12s ease-in-out infinite;
+  }
+  .blob-animate-2 {
+    animation: blob-float-2 15s ease-in-out infinite;
+  }
+  .blob-animate-3 {
+    animation: blob-float-3 18s ease-in-out infinite;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.8s ease-out both;
+  }
+  .animate-fade-up-1 {
+    animation: fade-up 0.8s ease-out 0.1s both;
+  }
+  .animate-fade-up-2 {
+    animation: fade-up 0.8s ease-out 0.2s both;
+  }
+  .animate-fade-up-3 {
+    animation: fade-up 0.8s ease-out 0.3s both;
+  }
+}

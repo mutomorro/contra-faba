@@ -1,0 +1,57 @@
+---
+import Blob from '@/components/BlobShapes.astro'
+---
+
+<section class="relative flex min-h-[90vh] items-center overflow-hidden bg-peach">
+  <div class="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+    <div class="grid grid-cols-1 items-center gap-8 md:grid-cols-12">
+      <div class="md:col-span-7">
+        <p class="section-label animate-fade-up">Cost Consultants</p>
+
+        <h1 class="animate-fade-up-1 mt-4">
+          Cost consultants for the construction industry
+        </h1>
+
+        <p class="animate-fade-up-2 prose-muted mt-6 text-lg leading-relaxed">
+          At Contra Faba, we understand that managing costs is essential to your
+          project&rsquo;s success. We provide tailored solutions that drive efficiency,
+          optimise budgets, and ensure transparent communication throughout your
+          project lifecycle.
+        </p>
+
+        <div class="animate-fade-up-3 mt-10 flex flex-wrap gap-4">
+          <a href="/contact/" class="btn btn-primary">Get in Touch</a>
+          <a href="/services/" class="btn btn-secondary">Our Services</a>
+        </div>
+      </div>
+
+      <!-- Reserves the right-hand column so copy never runs under the blobs -->
+      <div class="hidden md:col-span-5 md:block"></div>
+    </div>
+  </div>
+
+  <!--
+    Oversized blobs anchored right, bleeding off the edges. Sized in vw so they
+    scale with the viewport rather than looking marooned on wide monitors.
+
+    Below md there is no spare column — the copy runs the full width — so the two
+    upper blobs are hidden rather than shrunk. At mobile widths they sat directly
+    behind the headline and intro paragraph, which was unreadable. Only the
+    bottom-right blob survives, in the corner the left-aligned buttons leave free,
+    so the hero keeps some brand presence without fighting the text.
+  -->
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <Blob
+      name="teal"
+      class="blob-animate-1 blend-multiply absolute -top-[10%] -right-[8%] h-[min(35vw,900px)] w-[min(35vw,900px)] text-teal opacity-90 max-md:hidden"
+    />
+    <Blob
+      name="mustard"
+      class="blob-animate-2 blend-multiply absolute top-[18%] -right-[5%] h-[min(30vw,780px)] w-[min(30vw,780px)] text-mustard opacity-85 max-md:hidden"
+    />
+    <Blob
+      name="orange1"
+      class="blob-animate-3 blend-multiply absolute -bottom-[8%] -right-[6%] h-[min(28vw,720px)] w-[min(28vw,720px)] text-orange opacity-90 max-md:-right-[18%] max-md:-bottom-[4%] max-md:h-[260px] max-md:w-[260px]"
+    />
+  </div>
+</section>

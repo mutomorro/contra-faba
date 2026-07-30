@@ -1,0 +1,66 @@
+---
+import Blob from '@/components/BlobShapes.astro'
+import type { BlobName } from '@/lib/blobs'
+
+/**
+ * Shared hero for the inner pages.
+ *
+ * The previous build repeated this markup on four pages and positioned the
+ * decorative blobs at `left-0` / `-left-20`, which put them directly underneath
+ * the intro paragraph — multiply-blended over peach they read as grey and the
+ * copy became hard to read on top of them.
+ *
+ * Blobs are anchored to the right here and the copy is capped at a column width,
+ * so decoration and text never occupy the same space. Same approach as the
+ * homepage hero, which reserves its right-hand column.
+ */
+interface Props {
+  eyebrow: string
+  title: string
+  blobs?: { name: BlobName; colour: string }[]
+}
+
+const {
+  eyebrow,
+  title,
+  blobs = [
+    { name: 'teal', colour: 'text-teal' },
+    { name: 'mustard', colour: 'text-mustard' },
+  ],
+} = Astro.props
+
+// Fixed placements, largest first, all clear of the text column.
+//
+// Opacity is kept high deliberately. Multiply-blending a brand colour at 20-30%
+// over peach desaturates it into grey rather than reading as the colour, which
+// looked muddy; pushing the shapes further off-canvas at near-full opacity gives
+// the same bold treatment as the homepage hero.
+const placements = [
+  'absolute -top-[38%] -right-[10%] h-[min(30vw,560px)] w-[min(30vw,560px)] opacity-85 max-lg:h-[240px] max-lg:w-[240px] max-lg:-top-[20%]',
+  'absolute -bottom-[45%] right-[8%] h-[min(24vw,440px)] w-[min(24vw,440px)] opacity-70 max-lg:hidden',
+]
+const animations = ['blob-animate-1', 'blob-animate-3']
+---
+
+<section class="relative overflow-hidden bg-peach py-24 lg:py-32">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    {
+      blobs.slice(0, 2).map((blob, index) => (
+        <Blob
+          name={blob.name}
+          class={`${placements[index]} ${animations[index]} blend-multiply ${blob.colour}`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="section-label">{eyebrow}</p>
+      <h1 class="mt-4">{title}</h1>
+      <div class="prose-muted mt-6 text-lg">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

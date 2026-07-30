@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets'
+import { nav } from '@/lib/site'
+// Trimmed to its ink bounds — the original carries 62% empty vertical padding,
+// which is why the nav logo previously had to be scaled to 3x to look right.
+import logo from '@/assets/brand/logo-trimmed.png'
+
+// Paths in `nav` carry trailing slashes to match the configured trailingSlash,
+// so this compares like with like.
+const current = Astro.url.pathname
+
+function isActive(href: string) {
+  if (href === '/') return current === '/'
+  return current === href || current.startsWith(href)
+}
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-peach-dark/30 bg-cream/90 backdrop-blur-md"
+>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <nav class="flex h-20 items-center justify-between" aria-label="Main">
+      <a href="/" class="flex shrink-0 items-center" aria-label="Contra Faba — home">
+        <Image
+          src={logo}
+          alt="Contra Faba"
+          width={216}
+          height={38}
+          densities={[1, 2]}
+          loading="eager"
+          class="h-7 w-auto sm:h-8 lg:h-9"
+        />
+      </a>
+
+      <!-- Desktop navigation -->
+      <div class="hidden items-center gap-8 md:flex">
+        {
+          nav.map((link) => (
+            <a
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              class:list={[
+                'relative py-2 text-sm font-medium transition-colors',
+                isActive(link.href) ? 'text-teal' : 'text-ink-muted hover:text-teal',
+              ]}
+            >
+              {link.label}
+              {isActive(link.href) && (
+                <span
+                  class="absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-orange"
+                  aria-hidden="true"
+                />
+              )}
+            </a>
+          ))
+        }
+        <a href="/contact/" class="btn btn-primary px-5 py-2.5 text-xs">Get in Touch</a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button
+        type="button"
+        id="menu-toggle"
+        class="-mr-2 flex flex-col gap-1.5 p-2 md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <span class="menu-bar block h-0.5 w-6 rounded-full bg-ink transition-transform"></span>
+        <span class="menu-bar block h-0.5 w-6 rounded-full bg-ink transition-opacity"></span>
+        <span class="menu-bar block h-0.5 w-6 rounded-full bg-ink transition-transform"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" hidden class="border-t border-peach-dark/30 pb-6 md:hidden">
+      <div class="flex flex-col gap-1 pt-4">
+        {
+          nav.map((link) => (
+            <a
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              class:list={[
+                'py-2.5 text-base font-medium',
+                isActive(link.href) ? 'text-teal' : 'text-ink-muted',
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <a href="/contact/" class="btn btn-primary mt-3">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Hamburger -> cross, driven by the button's aria-expanded state so the
+     visual and the accessibility state can never disagree. */
+  #menu-toggle[aria-expanded='true'] .menu-bar:nth-child(1) {
+    transform: translateY(0.5rem) rotate(45deg);
+  }
+  #menu-toggle[aria-expanded='true'] .menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+  #menu-toggle[aria-expanded='true'] .menu-bar:nth-child(3) {
+    transform: translateY(-0.5rem) rotate(-45deg);
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('menu-toggle')
+  const menu = document.getElementById('mobile-menu')
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open))
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
+      menu.hidden = !open
+    }
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true')
+    })
+
+    // Escape closes the menu and returns focus to the button.
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false)
+        toggle.focus()
+      }
+    })
+
+    // Reset when crossing into the desktop breakpoint, so the menu can't be
+    // left open-but-hidden and then reappear on resize.
+    const desktop = window.matchMedia('(min-width: 768px)')
+    desktop.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false)
+    })
+  }
+</script>

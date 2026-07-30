@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHero from '@/components/PageHero.astro'
+import ContactForm from '@/components/ContactForm.astro'
+import { offices } from '@/lib/site'
+
+const officeAccent = ['bg-teal', 'bg-orange']
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Contra Faba. Offices in London and Glasgow, serving architects, contractors and homeowners across the South East and Scotland."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact/' },
+  ]}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Contact"
+    blobs={[
+      { name: 'teal', colour: 'text-teal' },
+      { name: 'orange1', colour: 'text-orange' },
+    ]}
+  >
+    Whether you&rsquo;re in the early planning stages or need expert cost management
+    support for an ongoing project, we&rsquo;re here to help. Based in London and
+    Glasgow, Contra Faba works with clients across the South East, Scotland (including
+    the Highlands), and beyond. Reach out to discuss your project, ask a question, or
+    find out how we can support your vision. We look forward to hearing from you.
+  </PageHero>
+
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
+        <!-- Details -->
+        <div>
+          <h2 class="mb-8">Get in touch to discuss your project</h2>
+
+          <ul class="space-y-6">
+            {
+              offices.map((office, index) => (
+                <li class="card p-8">
+                  <span
+                    class={`mb-4 block h-3 w-3 rounded-full ${officeAccent[index]}`}
+                    aria-hidden="true"
+                  />
+                  <h3 class="mb-2">{office.city}</h3>
+                  <p class="prose-muted mb-3 text-sm">{office.note}</p>
+                  <a
+                    href={`tel:${office.phoneHref}`}
+                    class="font-medium text-teal underline underline-offset-4 transition-colors hover:text-orange-text"
+                  >
+                    {office.phone}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="card-peach mt-6 p-8">
+            <h3 class="mb-2">Locations</h3>
+            <p class="prose-muted text-sm leading-relaxed">
+              We collaborate with a diverse range of clients including architects,
+              contractors, and home owners. Our approach ensures that, regardless of
+              your role or project size, you receive expert guidance and personalised
+              attention.
+            </p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div>
+          <h2 class="mb-8">Send us a message</h2>
+          <div class="card p-8 md:p-10">
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

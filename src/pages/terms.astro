@@ -1,0 +1,137 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { site, address } from '@/lib/site'
+
+/**
+ * DRAFT — requires review before go-live.
+ *
+ * These are website terms of use, covering the site itself. They deliberately
+ * do NOT attempt to set out terms of engagement for consultancy work, which
+ * belong in a contract or appointment letter, not on a marketing page.
+ */
+const lastUpdated = '30 July 2026'
+---
+
+<BaseLayout
+  title="Terms of Use"
+  description="The terms on which you may use the Contra Faba website."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Terms of Use', path: '/terms/' },
+  ]}
+>
+  <section class="bg-peach py-20 lg:py-24">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <p class="section-label">Legal</p>
+      <h1 class="mt-4">Terms of Use</h1>
+      <p class="prose-muted mt-4 text-sm">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 lg:py-24">
+    <div class="mx-auto max-w-3xl px-6 lg:px-8">
+      <div
+        class="prose-muted space-y-6 [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:text-ink [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-2"
+      >
+        <div
+          class="rounded-xl border-2 border-orange/40 bg-orange/5 p-5 text-sm text-ink not-prose"
+        >
+          <strong>Draft for review.</strong> These terms cover use of the website only.
+          They are not terms of engagement for consultancy services &mdash; those belong
+          in an appointment letter or contract. Please have them checked before go-live.
+        </div>
+
+        <h2>Who we are</h2>
+        <p>
+          This website is operated by {site.legalName}, a company registered in {
+            site.companyJurisdiction
+          } under number {site.companyNumber}, with its registered office at {
+            address.street
+          }, {address.locality} {address.postalCode}.
+        </p>
+        <p>
+          By using this website you accept these terms. If you do not accept them, please
+          do not use the site.
+        </p>
+
+        <h2>The information on this site</h2>
+        <p>
+          The content of this website is provided for general information about our
+          services. It is not professional advice, and it is not an offer to enter into a
+          contract.
+        </p>
+        <p>
+          Cost figures, budgets and project details shown in our case studies describe
+          specific past or current projects. They are illustrative only. Construction
+          costs depend entirely on scope, specification, site conditions, programme and
+          market rates at the time, so nothing on this site should be treated as an
+          indication of what your own project would cost. Any advice we give you will be
+          given in writing, for your project, under an agreed appointment.
+        </p>
+
+        <h2>Availability</h2>
+        <p>
+          We aim to keep the site available and up to date, but we do not guarantee that
+          it will be uninterrupted or error-free. We may change, suspend or withdraw any
+          part of it without notice.
+        </p>
+
+        <h2>Intellectual property</h2>
+        <p>
+          The text, photographs, branding and design of this site belong to us or to our
+          licensors, and are protected by copyright and trade mark law. You may view and
+          print pages for your own reference. You may not reproduce, republish or use any
+          part of the site commercially without our written permission.
+        </p>
+        <p>
+          Project photography is published with the relevant client&rsquo;s agreement.
+          Third-party names and logos shown on the site are the property of their
+          respective owners and appear only to identify practices and contractors we have
+          worked with.
+        </p>
+
+        <h2>Links to other sites</h2>
+        <p>
+          Where we link to another website, we do so for convenience. We have no control
+          over its content and accept no responsibility for it.
+        </p>
+
+        <h2>Our liability</h2>
+        <p>
+          Nothing in these terms limits our liability for death or personal injury caused
+          by negligence, for fraud, or for anything else that cannot lawfully be limited.
+        </p>
+        <p>
+          Subject to that, we are not liable for any loss arising from your use of, or
+          reliance on, this website or its content &mdash; including any loss of profit,
+          revenue or business opportunity.
+        </p>
+
+        <h2>Your privacy</h2>
+        <p>
+          Our <a href="/privacy/" class="text-teal underline underline-offset-2"
+            >privacy notice</a
+          > explains what we do with personal data you send us through this site.
+        </p>
+
+        <h2>Governing law</h2>
+        <p>
+          These terms are governed by the laws of England and Wales, and the courts of
+          England and Wales have exclusive jurisdiction over any dispute arising from
+          them.
+          <em
+            >TO CONFIRM: Contra Faba operates from Glasgow as well as London. If a
+            meaningful share of work is contracted in Scotland, Scots law may be the more
+            appropriate choice and this clause should be reviewed.</em
+          >
+        </p>
+
+        <h2>Changes to these terms</h2>
+        <p>
+          We may update these terms from time to time. The version published here is the
+          one that applies, and the date at the top shows when it last changed.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

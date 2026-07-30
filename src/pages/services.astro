@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHero from '@/components/PageHero.astro'
+import Blob from '@/components/BlobShapes.astro'
+
+const services = (
+  await getCollection('services', ({ data }) => data.listOnServicesPage)
+).sort((a, b) => a.data.order - b.data.order)
+
+const accentDot = {
+  orange: 'bg-orange',
+  teal: 'bg-teal',
+  mustard: 'bg-mustard',
+} as const
+
+const accentPanel = {
+  orange: 'bg-orange/8',
+  teal: 'bg-teal/8',
+  mustard: 'bg-mustard/10',
+} as const
+---
+
+<BaseLayout
+  title="Services"
+  description="Feasibility estimates, cost estimating, budget development, cost control, quantity surveying and value engineering for construction projects."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+  ]}
+>
+  <PageHero
+    eyebrow="Services"
+    title="Services"
+    blobs={[
+      { name: 'mustard', colour: 'text-mustard' },
+      { name: 'orange1', colour: 'text-orange' },
+    ]}
+  >
+    At Contra Faba, we offer a comprehensive suite of cost consulting solutions
+    designed to guide your project from initial concept to completion. Whether
+    you&rsquo;re a contractor, architect, or homeowner, our services provide clarity,
+    control, and confidence in every stage of your project. Explore our range of
+    services below.
+  </PageHero>
+
+  <section class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <ul class="space-y-10">
+        {
+          services.map((service, index) => (
+            <li class="card overflow-hidden">
+              {service.data.illustration && (
+                <Image
+                  src={service.data.illustration}
+                  alt={service.data.illustrationAlt ?? service.data.title}
+                  widths={[600, 900, 1400]}
+                  sizes="(min-width: 1280px) 1216px, 100vw"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  class="h-56 w-full object-cover md:h-72"
+                />
+              )}
+              <div class="grid grid-cols-1 gap-8 p-8 md:p-10 lg:grid-cols-5 lg:gap-12">
+                <div class="lg:col-span-3">
+                  <span
+                    class={`mb-6 block h-3 w-3 rounded-full ${accentDot[service.data.accent]}`}
+                    aria-hidden="true"
+                  />
+                  <p class="eyebrow mb-2">{service.data.subtitle}</p>
+                  <h2 class="mb-4 text-2xl font-semibold">{service.data.title}</h2>
+                  <p class="prose-muted leading-relaxed">{service.data.summary}</p>
+                </div>
+                <div class="lg:col-span-2">
+                  <div class={`rounded-xl p-6 ${accentPanel[service.data.accent]}`}>
+                    <h3 class="eyebrow mb-4 text-xs">What&rsquo;s included</h3>
+                    <ul class="space-y-3">
+                      {service.data.includes.map((item) => (
+                        <li class="flex items-start gap-3 text-sm">
+                          <span
+                            class={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${accentDot[service.data.accent]}`}
+                            aria-hidden="true"
+                          />
+                          <span class="text-ink-muted">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-teal py-24 text-on-teal lg:py-32">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Blob
+        name="teal"
+        class="blob-animate-1 absolute -right-20 -bottom-20 h-[400px] w-[400px] text-teal-light opacity-30"
+      />
+    </div>
+    <div class="relative z-10 mx-auto max-w-7xl px-6 text-center lg:px-8">
+      <h2 class="mx-auto max-w-2xl">Not sure what you need?</h2>
+      <p class="mx-auto mt-6 max-w-lg text-on-teal-muted">
+        Every project is different. Get in touch and we&rsquo;ll help you figure out the
+        right approach for your specific situation.
+      </p>
+      <div class="mt-10">
+        <a href="/contact/" class="btn btn-on-teal">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

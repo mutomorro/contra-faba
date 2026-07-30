@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PageHero from '@/components/PageHero.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import { projectGroups } from '@/lib/site'
+
+const allProjects = await getCollection('projects')
+
+// Group by status, matching the WordPress page's three sections. Within a group,
+// oldest first, which reproduces the original ordering.
+const groups = projectGroups.map((group) => ({
+  ...group,
+  projects: allProjects
+    .filter((project) => project.data.status === group.status)
+    .sort((a, b) => a.data.publishedDate.valueOf() - b.data.publishedDate.valueOf()),
+}))
+
+/**
+ * Architect client logos.
+ *
+ * Only two of the fourteen are identifiable: the files were verified against the
+ * WordPress originals by byte size, which confirmed arch-client-09 is Delve
+ * Architects and arch-client-11 is HOKO Design. The other twelve were uploaded
+ * as undated screenshots with no company name anywhere in the source, so they
+ * carry generic alt text until Jamie can identify them.
+ */
+const archNames: Record<string, string> = {
+  'arch-client-09': 'Delve Architects',
+  'arch-client-11': 'HOKO Design',
+}
+
+const archLogos = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../../assets/logos/arch-client-*.png', {
+    eager: true,
+  })
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const key = path.split('/').pop()!.replace('.png', '')
+    return { src: mod.default, name: archNames[key], key }
+  })
+
+const contractorLogos = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../../assets/logos/*-logo.png', { eager: true })
+)
+  .map(([path, mod]) => ({ path, src: mod.default }))
+  // The three technology-partner marks live in the footer, not here.
+  .filter(({ path }) => !/costx|bcis|monday/.test(path))
+  .map(({ path, src }) => {
+    const key = path.split('/').pop()!.replace('-logo.png', '')
+    const names: Record<string, string> = {
+      'maro-construction': 'Maro Construction',
+      'eco-construction-scotland': 'Eco Construction Scotland',
+      'sygnet-style': 'Sygnet Style',
+      'hawksmore-construction': 'Hawksmore Construction',
+      'highline-homes': 'Highline Homes',
+      'oaktree-renovations': 'OakTree Renovations',
+    }
+    return { src, name: names[key] ?? key }
+  })
+  .sort((a, b) => a.name.localeCompare(b.name))
+---
+
+<BaseLayout
+  title="Our Work"
+  description="A selection of Contra Faba's cost consultancy projects across London and Glasgow, from pre-construction through to recently completed."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Our Work', path: '/our-work/' },
+  ]}
+>
+  <PageHero
+    eyebrow="Our work"
+    title="Our Work"
+    blobs={[
+      { name: 'orange1', colour: 'text-orange' },
+      { name: 'teal', colour: 'text-teal' },
+    ]}
+  >
+    Founded on a passion for precision and a commitment to transparency, Contra Faba
+    began with a simple idea: effective cost management transforms projects. From
+    humble beginnings, we&rsquo;ve grown into a trusted partner for contractors,
+    architects, and homeowners, offering tailored cost consulting solutions that pave
+    the way for project success.
+  </PageHero>
+
+  <!-- Client logos -->
+  <section class="bg-peach-light py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mb-14">
+        <h2 class="eyebrow mb-8 text-center">
+          Recent architects we&rsquo;ve worked with&hellip;
+        </h2>
+        <ul class="grid grid-cols-3 items-center justify-items-center gap-6 sm:grid-cols-4 md:grid-cols-7">
+          {
+            archLogos.map((logo) => (
+              <li class="flex h-12 items-center justify-center">
+                <Image
+                  src={logo.src}
+                  alt={logo.name ?? ''}
+                  height={40}
+                  densities={[1, 2]}
+                  loading="lazy"
+                  class="h-10 w-auto opacity-70 transition-opacity hover:opacity-100"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-8 text-center">
+          Recent contractors we&rsquo;ve worked with&hellip;
+        </h2>
+        <ul class="grid grid-cols-3 items-center justify-items-center gap-6 md:grid-cols-6">
+          {
+            contractorLogos.map((logo) => (
+              <li class="flex h-12 items-center justify-center">
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
+                  height={40}
+                  densities={[1, 2]}
+                  loading="lazy"
+                  class="h-10 w-auto opacity-70 transition-opacity hover:opacity-100"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects, grouped by stage as on the WordPress site -->
+  {
+    groups.map((group, groupIndex) => (
+      <section
+        class:list={[
+          'py-20 lg:py-24',
+          groupIndex % 2 === 0 ? 'bg-cream' : 'bg-peach-light',
+        ]}
+      >
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <div class="mb-12 max-w-2xl">
+            <h2>{group.heading}</h2>
+            <p class="prose-muted mt-4">{group.intro}</p>
+          </div>
+
+          <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {group.projects.map((project, index) => (
+              <li class="flex">
+                <ProjectCard project={project} eager={groupIndex === 0 && index === 0} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="bg-teal py-24 text-on-teal lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 text-center lg:px-8">
+      <h2 class="mx-auto max-w-2xl">Have a project in mind?</h2>
+      <p class="mx-auto mt-6 max-w-lg text-on-teal-muted">
+        Tell us what you&rsquo;re planning and we&rsquo;ll talk you through how we
+        would approach the costs.
+      </p>
+      <div class="mt-10">
+        <a href="/contact/" class="btn btn-on-teal">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

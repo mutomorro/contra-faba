@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { statusLabels } from '@/lib/site'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  /** First card in the first group is above the fold on /our-work/. */
+  eager?: boolean
+}
+
+const { project, eager = false } = Astro.props
+const { title, summary, featuredImage, featuredImageAlt, projectType, location, budget, status } =
+  project.data
+
+const statusStyles: Record<typeof status, string> = {
+  'pre-construction': 'bg-mustard/15 text-mustard-dark',
+  'in-progress': 'bg-orange/10 text-orange-text',
+  completed: 'bg-teal/10 text-teal',
+}
+---
+
+<a
+  href={`/our-work/${project.id}/`}
+  class="card card-hover group flex flex-col overflow-hidden"
+>
+  <div class="relative aspect-3/2 overflow-hidden">
+    <Image
+      src={featuredImage}
+      alt={featuredImageAlt}
+      widths={[400, 600, 900]}
+      sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+      loading={eager ? 'eager' : 'lazy'}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col p-8">
+    <div class="mb-3 flex flex-wrap items-center gap-2">
+      <span class="text-xs font-semibold tracking-wider text-orange-text uppercase">
+        {projectType}
+      </span>
+      <span class="text-xs text-ink-muted">{location}</span>
+      <span class={`rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[status]}`}>
+        {statusLabels[status]}
+      </span>
+    </div>
+
+    <h3 class="mb-2">{title}</h3>
+    <p class="prose-muted flex-1 text-sm leading-relaxed">{summary}</p>
+
+    <p class="mt-4 text-xs font-semibold tracking-wider text-ink-muted uppercase">
+      Budget <span class="text-ink">{budget}</span>
+    </p>
+  </div>
+</a>

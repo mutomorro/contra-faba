@@ -1,0 +1,102 @@
+---
+import { site, address, offices } from '@/lib/site'
+
+interface Breadcrumb {
+  name: string
+  /** Path including trailing slash, e.g. /our-work/ */
+  path: string
+}
+
+interface Props {
+  /** Supplied on nested pages to emit a BreadcrumbList. */
+  breadcrumbs?: Breadcrumb[]
+}
+
+const { breadcrumbs } = Astro.props
+
+const orgId = `${site.url}/#organization`
+const websiteId = `${site.url}/#website`
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'ProfessionalService',
+    '@id': orgId,
+    name: site.name,
+    legalName: site.legalName,
+    description: site.description,
+    url: site.url,
+    logo: `${site.url}/logo.png`,
+    image: `${site.url}/og-image.png`,
+    priceRange: '££',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: address.street,
+      addressLocality: address.locality,
+      postalCode: address.postalCode,
+      addressCountry: address.country,
+    },
+    telephone: offices[0].phoneHref,
+    contactPoint: offices.map((office) => ({
+      '@type': 'ContactPoint',
+      contactType: `${office.city} office`,
+      telephone: office.phoneHref,
+      areaServed: 'GB',
+      availableLanguage: 'en-GB',
+    })),
+    areaServed: [
+      { '@type': 'City', name: 'London' },
+      { '@type': 'City', name: 'Glasgow' },
+      { '@type': 'AdministrativeArea', name: 'South East England' },
+      { '@type': 'AdministrativeArea', name: 'Scotland' },
+      { '@type': 'AdministrativeArea', name: 'Scottish Highlands' },
+    ],
+    knowsAbout: [
+      'Construction cost consultancy',
+      'Quantity surveying',
+      'Feasibility estimates',
+      'Cost estimating',
+      'Budget development and cost planning',
+      'Cost control and monitoring',
+      'Value engineering',
+      'Contract administration',
+    ],
+    identifier: {
+      '@type': 'PropertyValue',
+      name: `Company number (${site.companyJurisdiction})`,
+      value: site.companyNumber,
+    },
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: site.url,
+    name: site.name,
+    description: site.description,
+    inLanguage: 'en-GB',
+    publisher: { '@id': orgId },
+  },
+]
+
+if (breadcrumbs && breadcrumbs.length > 0) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: new URL(crumb.path, site.url).href,
+    })),
+  })
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': graph,
+}
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(jsonLd)}
+/>

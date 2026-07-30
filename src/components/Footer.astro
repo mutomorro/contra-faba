@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets'
+import { site, nav, offices } from '@/lib/site'
+import logoWhite from '@/assets/brand/logo-white-trimmed.png'
+import costx from '@/assets/logos/costx-logo.png'
+import bcis from '@/assets/logos/bcis-logo.png'
+import monday from '@/assets/logos/monday-logo.png'
+
+const partners = [
+  { src: costx, name: 'CostX' },
+  { src: bcis, name: 'BCIS' },
+  { src: monday, name: 'Monday.com' },
+]
+
+const year = new Date().getFullYear()
+---
+
+<footer class="bg-teal text-on-teal">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <!-- Company -->
+      <div class="lg:col-span-2">
+        <Image
+          src={logoWhite}
+          alt="Contra Faba"
+          width={366}
+          height={64}
+          densities={[1, 2]}
+          loading="lazy"
+          class="mb-6 h-8 w-auto"
+        />
+        <p class="max-w-md text-sm leading-relaxed text-on-teal-muted">
+          We&rsquo;re cost consultants for the construction industry. Working across
+          London, the South East and Scotland for architects, contractors and home
+          owners. We help our clients manage their projects and budgets effectively.
+        </p>
+
+        <div class="mt-8">
+          <h2 class="mb-4 text-xs font-semibold tracking-widest text-on-teal-dim uppercase">
+            Technology Partners
+          </h2>
+          <ul class="flex flex-wrap items-center gap-6">
+            {
+              partners.map((partner) => (
+                <li>
+                  <Image
+                    src={partner.src}
+                    alt={partner.name}
+                    height={20}
+                    densities={[1, 2]}
+                    loading="lazy"
+                    class="h-5 w-auto opacity-70"
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="mb-6 text-xs font-semibold tracking-widest text-on-teal-dim uppercase">
+          Contact
+        </h2>
+        <address class="space-y-4 text-sm not-italic text-on-teal-muted">
+          {
+            offices.map((office) => (
+              <div>
+                <span class="block text-on-teal">{office.city}</span>
+                <a
+                  href={`tel:${office.phoneHref}`}
+                  class="transition-colors hover:text-peach"
+                >
+                  {office.phone}
+                </a>
+              </div>
+            ))
+          }
+          <div class="pt-2">
+            27 Old Gloucester Street<br />London WC1N 3AX
+          </div>
+        </address>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h2 class="mb-6 text-xs font-semibold tracking-widest text-on-teal-dim uppercase">
+          Quick Links
+        </h2>
+        <nav aria-label="Footer">
+          <ul class="flex flex-col gap-3">
+            {
+              nav.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-on-teal-muted transition-colors hover:text-peach"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row lg:px-8"
+    >
+      <p class="text-xs text-on-teal-dim">
+        &copy; {year} {site.legalName}. Registered in {site.companyJurisdiction}: {
+          site.companyNumber
+        }
+      </p>
+      <ul class="flex gap-6">
+        <li>
+          <a
+            href="/privacy/"
+            class="text-xs text-on-teal-dim transition-colors hover:text-on-teal"
+          >
+            Privacy
+          </a>
+        </li>
+        <li>
+          <a
+            href="/terms/"
+            class="text-xs text-on-teal-dim transition-colors hover:text-on-teal"
+          >
+            Terms
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
