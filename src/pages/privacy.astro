@@ -3,14 +3,14 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import { site, address, offices } from '@/lib/site'
 
 /**
- * DRAFT — requires review before go-live.
+ * Reviewed and approved by Contra Faba, 30 July 2026.
  *
  * This notice describes only what the site verifiably does: it collects the
  * contact-form fields and nothing else. There is no analytics, no advertising
  * and no tracking on the site, so nothing here claims otherwise.
  *
- * Items marked TO CONFIRM need a decision from Contra Faba and must not be
- * published as-is.
+ * If analytics or a captcha are ever added, this notice must be updated in the
+ * same change — both statements below would otherwise become false.
  */
 const lastUpdated = '30 July 2026'
 ---
@@ -36,15 +36,6 @@ const lastUpdated = '30 July 2026'
       <div
         class="prose-muted space-y-6 [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:text-ink [&_h3]:mt-8 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:text-ink [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-2"
       >
-        <div
-          class="rounded-xl border-2 border-orange/40 bg-orange/5 p-5 text-sm text-ink not-prose"
-        >
-          <strong>Draft for review.</strong> This notice has been prepared from what the
-          website technically does. Items marked <em>TO CONFIRM</em> need a decision from
-          Contra Faba, and the whole notice should be checked by someone qualified before
-          the site goes live.
-        </div>
-
         <h2>Who we are</h2>
         <p>
           {site.legalName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is the data controller
@@ -57,8 +48,8 @@ const lastUpdated = '30 July 2026'
         <p>
           For any question about this notice or about your personal data, contact us on {
             offices[0].phone
-          } (London) or {offices[1].phone} (Glasgow).
-          <em>TO CONFIRM: an email address for data protection enquiries.</em>
+          } (London) or {offices[1].phone} (Glasgow), or write to us at the address
+          above.
         </p>
 
         <h2>What we collect</h2>
@@ -106,11 +97,10 @@ const lastUpdated = '30 July 2026'
 
         <h2>How long we keep it</h2>
         <p>
-          We keep enquiry correspondence only as long as we need it. <em
-            >TO CONFIRM: a retention period &mdash; commonly 12 or 24 months for
-            enquiries that do not become projects, and 6 years after completion for
-            project records, to match the limitation period for contractual claims.</em
-          >
+          We keep enquiry correspondence only as long as we need it. Where an enquiry
+          does not lead to work, we delete it within 24 months. Where it becomes a
+          project, we keep the project records for 6 years after completion, which
+          matches the period during which a contractual claim could still be brought.
         </p>
 
         <h2>Your rights</h2>

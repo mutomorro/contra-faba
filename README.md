@@ -114,22 +114,36 @@ projects on the single `/our-work/` page, which still carries their full content
 Netlify builds from this repo: `npm run build`, publish `dist`. Redirects and
 headers are in `netlify.toml`.
 
-### Domain cutover
+### Domain cutover and DNS migration
 
-DNS is at SiteGround. **Change only the `A` / `CNAME` records.** Email is Google
-Workspace (`MX → smtp.google.com`, plus an SPF `TXT`); touching those records
-breaks email along with the website. Leave the `google-site-verification` TXT in
-place so Search Console keeps working.
+See **[docs/dns-migration.md](docs/dns-migration.md)** for the full runbook,
+including a complete pre-migration backup of the DNS zone.
 
-Lower the A-record TTL from 6 hours to 5 minutes a day ahead of the switch, and
-keep the WordPress host live for a fortnight afterwards as a rollback path.
+Two separate jobs, to be done in this order and not together:
+
+1. **Go live** — point `contrafaba.com` at Netlify by changing two A/CNAME records
+   inside SiteGround's existing zone. The A-record TTL is 300s, so this propagates
+   in ~5 minutes and rolls back just as fast.
+2. **Move DNS to Infomaniak** — where the domain is already registered. This is a
+   nameserver change, governed by the registry's 48-hour NS TTL, so it cannot be
+   rolled back quickly. Pre-stage the whole zone at Infomaniak first and leave the
+   SiteGround zone intact until propagation completes, so both nameserver sets
+   return identical answers and the switch is invisible.
+
+The email records (`MX`, SPF, DMARC, and especially the 410-character DKIM key at
+`google._domainkey`) are Google Workspace and must survive both phases untouched.
+The DKIM record is the highest-risk item: DNS splits it across two 255-character
+strings, it is one logical record, and getting it wrong degrades deliverability
+silently rather than causing a visible outage.
 
 ## Outstanding
 
-- [ ] **Privacy and Terms pages are drafts.** Both carry a visible review banner
-      and `TO CONFIRM` markers (data-retention period, an email address for data
-      requests, and whether English or Scots law should govern). They need a
-      qualified read before go-live.
+- [x] ~~Privacy and Terms drafts~~ — reviewed and approved 30 July 2026. Retention
+      is now stated as 24 months for enquiries and 6 years after project completion;
+      governing law is England and Wales; data-protection contact is by phone or
+      post. **If analytics or a captcha are ever added, the privacy notice must be
+      updated in the same change** — it currently states the site does no tracking,
+      which is true and must stay true.
 - [ ] **12 of the 14 architect logos are unidentified.** They were uploaded to
       WordPress as undated screenshots. Only `arch-client-09` (Delve Architects)
       and `arch-client-11` (HOKO Design) could be matched. The rest carry empty
