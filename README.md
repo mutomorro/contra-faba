@@ -111,8 +111,12 @@ projects on the single `/our-work/` page, which still carries their full content
 
 ## Deployment
 
-Netlify builds from this repo: `npm run build`, publish `dist`. Redirects and
-headers are in `netlify.toml`.
+Netlify builds from `main`: `npm run build`, publish `dist`. Redirects, headers
+and the trailing-slash setting are in `netlify.toml`. Pushing to `main` deploys
+to production automatically.
+
+Live at **https://contrafaba.com**. The domain is registered at Infomaniak, which
+also serves DNS; the site is on Netlify and email on Google Workspace.
 
 ### Domain cutover and DNS migration
 
@@ -153,12 +157,19 @@ silently rather than causing a visible outage.
       `hello@contrafaba.com`, which appears nowhere on the WordPress site and
       could not be verified, so it was left out. Add a real one to
       `src/lib/site.ts` if one exists.
-- [ ] Set the Netlify Forms notification recipient for the `enquiry` form.
-- [ ] Case-study detail pages have no body copy (see above).
+- [x] ~~Netlify Forms notification recipient~~ — set, and a test submission was
+      confirmed end to end on 30 July 2026.
+- [ ] Case-study detail pages have no body copy (see above). Biggest content win
+      available — they are the pages a prospective client actually reads.
 - [ ] No analytics. Add a privacy-preserving option (Plausible, Fathom, or
       Netlify Analytics) if wanted — the privacy notice currently states, truthfully,
       that the site does no tracking, so it must be updated alongside.
-- [ ] The old Sanity project (`bbfankjm`) and the Vercel project are both still
-      live and now unused. Delete once this is in production.
+- [ ] **Decommission the old stack**, once the DNS move has settled for a week:
+      SiteGround hosting (check the account for mail forwarders, databases or
+      other domains first), the Sanity project (`bbfankjm`), and the Vercel
+      project. All three are live, paid-for and now unused.
+- [ ] Add the Search Console service account to the contrafaba.com property so
+      rankings can be monitored through the migration. It currently only has
+      access to mutomorro.com.
 - [ ] `.git` history still contains the 292MB of original images. Removing them
       needs a history rewrite and force-push — a deliberate decision, not done.
