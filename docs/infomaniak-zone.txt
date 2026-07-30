@@ -1,0 +1,36 @@
+; contrafaba.com — records to hold at Infomaniak
+; Website on Netlify, email on Google Workspace.
+;
+; Keep whatever SOA / NS lines Infomaniak generates for itself — do not
+; paste SiteGround's. Everything below replaces the current zone contents.
+;
+; A/CNAME kept at TTL 300 so the website can still be repointed quickly.
+; Email records at 3600.
+
+; ---- Website (Netlify) ----
+@                    300  IN A      75.2.60.5
+www                  300  IN CNAME  contrafaba.netlify.app.
+
+; ---- Email: Google Workspace ----
+@                   3600  IN MX     1 smtp.google.com.
+@                   3600  IN TXT    "v=spf1 include:_spf.google.com ~all"
+_dmarc              3600  IN TXT    "v=DMARC1; p=none; aspf=r; adkim=r;"
+; DKIM — ONE record, 410 chars, split into 2 quoted strings of 255+155.
+google._domainkey   3600  IN TXT    ( "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA22MOiynjLhbjxFTt3YDDovQ97G5mEyKbwbgWoR7W9bIFqMeWdVeMRs2O2Y7TCOcW5sSeFV9nvY/UDUnu6XKjWj97e5D1tNcR/I8eStWuk5VUD1/QDgJV6CMoa4b+eHhkdUKsVE3LU+d3Fui5C4bxfioZpxV6EnFnFj2TAnoS29VazKu6SH6WXHxQ55NNmGDai" "QaRV9BymhbFt0vQA77p4J3gDAL/r244+XZpWOZTNhrJjJOqU149bhLF/yxcHkXqim2BnOKSUj56rpNAsXUBfgIDRSf2x8Kdtkc3ooXSUrXHEHAceO7ntqkQv97j2mj8Wxyn4viMZT7ltreQtns3yQIDAQAB" )
+
+; ---- Search Console verification ----
+@                   3600  IN TXT    "google-site-verification=MfpKiSnC-BCChPJDCUkKGk3ZwYR_fvb558EgxCDqYJ0"
+
+; ---- Restrict who may issue TLS certs for this domain ----
+@                   3600  IN CAA    0 issue "letsencrypt.org"
+
+; ---- DELIBERATELY OMITTED ----
+; These exist at SiteGround as cPanel defaults pointing at 35.214.69.78.
+; Once SiteGround is cancelled they resolve to a dead or reassigned host.
+;   A  ssh           35.214.69.78
+;   A  mail          35.214.69.78
+;   A  ftp           35.214.69.78
+;   A  autodiscover  35.214.69.78   <- actively harmful: breaks mail client setup
+;   A  autoconfig    35.214.69.78   <- actively harmful: breaks mail client setup
+;
+; Google Workspace needs none of them.
