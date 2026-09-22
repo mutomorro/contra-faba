@@ -131,3 +131,18 @@ await writeFile(
   ) + '\n'
 )
 console.log('wrote public/site.webmanifest')
+
+// ---------------------------------------------------------------------------
+// 5. Organisation logo for structured data
+//    JSON-LD's `logo` must be a real, crawlable image at least 112px on its
+//    short edge that reads on a white background. The trimmed logo on white,
+//    padded, at a stable unhashed path (/logo.png) that never needs to change.
+// ---------------------------------------------------------------------------
+await sharp('src/assets/brand/logo-trimmed.png')
+  .resize({ width: 1000 })
+  .extend({ top: 60, bottom: 60, left: 60, right: 60, background: '#FFFFFF' })
+  .flatten({ background: '#FFFFFF' })
+  .png()
+  .toFile('public/logo.png')
+const orgLogo = await sharp('public/logo.png').metadata()
+console.log(`wrote public/logo.png (${orgLogo.width}x${orgLogo.height})`)

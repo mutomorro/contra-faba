@@ -3,12 +3,19 @@ import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Hero from '@/components/Hero.astro'
 import Blob from '@/components/BlobShapes.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
 import { site } from '@/lib/site'
 
 // The WordPress homepage advertised four "popular services" — a different set
 // from the six listed on /services/. That selection is data, not layout.
 const services = (await getCollection('services', ({ data }) => data.onHomepage)).sort(
   (a, b) => a.data.order - b.data.order
+)
+
+// Projects flagged `featured` in their frontmatter. Before this section the
+// homepage - the page with the most authority - linked to no case study at all.
+const featured = (await getCollection('projects', ({ data }) => data.featured)).sort(
+  (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
 )
 
 const clients = [
@@ -30,7 +37,10 @@ const clients = [
 ]
 ---
 
-<BaseLayout title={`${site.name} — ${site.tagline}`} description={site.description}>
+<BaseLayout
+  title={`Construction Cost Consultants in London & Glasgow | ${site.name}`}
+  description={site.description}
+>
   <Hero />
 
   <!-- Popular services -->
@@ -50,7 +60,10 @@ const clients = [
           services.map((service) => (
             <li class="card card-hover p-10">
               <h3 class="mb-3">
-                <a href="/services/" class="hover:text-teal">
+                <a
+                  href={service.data.listOnServicesPage ? `/services/#${service.id}` : '/services/'}
+                  class="hover:text-teal"
+                >
                   {service.data.title}
                 </a>
               </h3>
@@ -64,6 +77,34 @@ const clients = [
 
       <div class="mt-12 text-center">
         <a href="/services/" class="btn btn-secondary">All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured projects -->
+  <section class="bg-cream pb-24 lg:pb-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto mb-16 max-w-2xl text-center">
+        <p class="section-label">Our work</p>
+        <h2 class="mt-4">Featured projects</h2>
+        <p class="prose-muted mx-auto mt-4">
+          A selection of the projects we are working on and have recently completed,
+          in London and Scotland.
+        </p>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          featured.map((project) => (
+            <li class="flex">
+              <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-12 text-center">
+        <a href="/our-work/" class="btn btn-secondary">See All Our Work</a>
       </div>
     </div>
   </section>

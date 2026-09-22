@@ -28,6 +28,107 @@
   to = "/services/"
   status = 301
 
+# --- WordPress leftovers ---------------------------------------------------
+# WordPress generates URLs the Astro site does not: its own sitemaps, RSS feeds
+# and taxonomy archives. Google keeps requesting any it ever saw, and each one
+# that 404s is a crawl wasted and a signal lost. This is the class of fault that
+# left 118 URLs 404ing after the Mutomorro migration (SEO Incident Log,
+# "Problem 2"), so it is closed off here up front.
+#
+# Rules are deliberately limited to paths where no real page exists or ever
+# will. Netlify only applies an unforced rule when no file matches, and matches
+# with or without a trailing slash - so there is no /services/* or /our-work/*
+# catch-all here: without a live test it cannot be proven that one would never
+# swallow a real page's slashless form.
+
+# Old sitemap addresses -> the Astro sitemap index.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+[[redirects]]
+  from = "/sitemap_index.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+[[redirects]]
+  from = "/wp-sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+[[redirects]]
+  from = "/page-sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+[[redirects]]
+  from = "/post-sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
+# Feeds and archives - the site has no blog, so these land on the homepage.
+[[redirects]]
+  from = "/feed/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/comments/feed/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/category/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/tag/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/author/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/index.php"
+  to = "/"
+  status = 301
+
+# Common WordPress page-name variants for the pages that do exist.
+[[redirects]]
+  from = "/about-us"
+  to = "/about/"
+  status = 301
+
+[[redirects]]
+  from = "/contact-us"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/our-services"
+  to = "/services/"
+  status = 301
+
+[[redirects]]
+  from = "/projects/*"
+  to = "/our-work/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio/*"
+  to = "/our-work/"
+  status = 301
+
 # --- Headers ---------------------------------------------------------------
 [[headers]]
   for = "/*"

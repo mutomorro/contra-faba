@@ -4,7 +4,9 @@ import { Image } from 'astro:assets'
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Blob from '@/components/BlobShapes.astro'
-import { statusLabels } from '@/lib/site'
+import ProjectCard from '@/components/ProjectCard.astro'
+import { site, statusLabels } from '@/lib/site'
+import { fitDescription, shareImage } from '@/lib/seo'
 
 interface Props {
   project: CollectionEntry<'projects'>
@@ -25,6 +27,49 @@ const { data } = project
 // this renders nothing unless someone types below the frontmatter.
 const { Content } = await render(project)
 
+const pageUrl = `${site.url}/our-work/${project.id}/`
+
+// "Limehouse Retreat, London - Case Study" says what and where in the search
+// result; the bare project name alone gave a searcher no reason to click.
+const pageTitle = `${data.title}, ${data.location} - Case Study`
+
+// Lead with the facts a prospective client scans for, then the story. Cut at a
+// word boundary rather than mid-word.
+const description = fitDescription(
+  `${data.projectType} in ${data.location}, ${data.budget} budget. ${data.summary}`
+)
+
+const image = await shareImage(data.featuredImage, data.featuredImageAlt)
+
+const article = {
+  '@type': 'Article',
+  '@id': `${pageUrl}#article`,
+  headline: data.title,
+  description: data.summary,
+  image: new URL(image.src, site.url).href,
+  datePublished: data.publishedDate.toISOString().slice(0, 10),
+  author: { '@id': `${site.url}/#organization` },
+  publisher: { '@id': `${site.url}/#organization` },
+  mainEntityOfPage: pageUrl,
+  inLanguage: 'en-GB',
+  about: {
+    '@type': 'Place',
+    name: `${data.title}, ${data.location}`,
+  },
+}
+
+// Three other projects, same stage first, so every case study links onward and
+// none depends on the sitemap alone to be discovered.
+const related = (await getCollection('projects'))
+  .filter((p) => p.id !== project.id)
+  .sort(
+    (a, b) =>
+      Number(b.data.status === data.status) - Number(a.data.status === data.status) ||
+      Number(b.data.featured) - Number(a.data.featured) ||
+      a.id.localeCompare(b.id)
+  )
+  .slice(0, 3)
+
 const facts = [
   { label: 'Type', value: data.projectType },
   { label: 'Location', value: data.location },
@@ -35,8 +80,11 @@ const facts = [
 ---
 
 <BaseLayout
-  title={data.title}
-  description={data.summary.slice(0, 155)}
+  title={pageTitle}
+  description={description}
+  image={image}
+  ogType="article"
+  jsonLd={[article]}
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'Our Work', path: '/our-work/' },
@@ -133,10 +181,26 @@ const facts = [
     )
   }
 
-  <section class="bg-peach-light py-16">
-    <div class="mx-auto flex max-w-7xl flex-col items-start gap-6 px-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-      <a href="/our-work/" class="btn btn-secondary">&larr; Back to Our Work</a>
-      <a href="/contact/" class="btn btn-primary">Discuss your project</a>
+  <section class="bg-peach-light py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <h2 class="mb-10">More of our work</h2>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          related.map((item) => (
+            <li class="flex">
+              <ProjectCard project={item} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-12 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <a href="/our-work/" class="btn btn-secondary">&larr; All projects</a>
+        <div class="flex flex-wrap gap-4">
+          <a href="/services/" class="btn btn-secondary">Our services</a>
+          <a href="/contact/" class="btn btn-primary">Discuss your project</a>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
