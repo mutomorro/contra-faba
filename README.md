@@ -109,6 +109,32 @@ redirect on every indexed URL and moves the canonical. Don't.
 The seven `/our-work/<slug>/` case-study pages are new — WordPress showed all
 projects on the single `/our-work/` page, which still carries their full content.
 
+## SEO checks
+
+Run after any change to templates, content or `netlify.toml`:
+
+```bash
+npm run build && npm run seo-check
+```
+
+`scripts/seo-check.mjs` tests every built page and exits non-zero on a fault:
+titles and descriptions (present, unique, sensible length), a self-referencing
+canonical with its trailing slash that agrees with `og:url`, sitemap membership
+matching `noindex`, Open Graph and Twitter tags with a share image that exists,
+one `<h1>`, alt text on every image, JSON-LD that parses and only points at real
+URLs, internal links that resolve without a redirect, no orphan pages, and every
+hub (`/our-work/`, `/services/`) linking to all of its children.
+
+It exists because of the Mutomorro migration (Craft: *SEO Incident Log: Trailing
+Slash and Migration Recovery*), where faults that looked fine page by page -
+canonicals that disagreed with the served URL, whole page types missing share
+tags, hub pages that linked to none of their children - cost most of the site's
+search traffic. That log's standing rule applies here: never call SEO work done
+without checking the built output.
+
+Netlify deploy previews and branch deploys are marked `noindex` at build time
+(`CONTEXT` is not `production`), so `*.netlify.app` copies can't be indexed.
+
 ## Deployment
 
 Netlify builds from `main`: `npm run build`, publish `dist`. Redirects, headers
@@ -171,5 +197,23 @@ silently rather than causing a visible outage.
 - [ ] Add the Search Console service account to the contrafaba.com property so
       rankings can be monitored through the migration. It currently only has
       access to mutomorro.com.
+- [ ] **Search Console and Bing.** Submit `https://contrafaba.com/sitemap-index.xml`
+      in Google Search Console (the domain property is already verified by the
+      `google-site-verification` TXT record) and in Bing Webmaster Tools, then
+      use URL Inspection on the five legacy URLs to confirm Google sees the new
+      canonicals. Check *Pages > Not found (404)* for old WordPress URLs that
+      `netlify.toml` does not yet redirect, and add them.
+- [ ] **Google Business Profile** for London and, if it has a staffed address,
+      Glasgow. For a local service business this is the largest single search
+      lever and sits entirely outside this repo. Keep the name, address and phone
+      numbers identical to `src/lib/site.ts`, and add the profile URL to `sameAs`
+      in `src/components/JsonLd.astro`.
+- [ ] **Individual service pages** (`/services/quantity-surveying/` and so on)
+      would let each service rank for its own searches ("quantity surveyor
+      Glasgow"). Each needs several hundred words of real copy from Jamie first -
+      publishing them with the current two-sentence summaries would create thin
+      pages that repeat `/services/`.
+- [ ] Ravenscourt Renovation's copy says it overlooks *Wandsworth* Park;
+      Ravenscourt Park is in Hammersmith. Worth confirming with Jamie.
 - [ ] `.git` history still contains the 292MB of original images. Removing them
       needs a history rewrite and force-push — a deliberate decision, not done.

@@ -19,6 +19,8 @@ export const site = {
     'Cost consultants for the construction industry. Working across London, the South East and Scotland for architects, contractors and home owners.',
   companyNumber: '12848166',
   companyJurisdiction: 'England & Wales',
+  companiesHouseUrl:
+    'https://find-and-update.company-information.service.gov.uk/company/12848166',
 } as const
 
 export const address = {

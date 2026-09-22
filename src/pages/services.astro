@@ -4,10 +4,39 @@ import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import PageHero from '@/components/PageHero.astro'
 import Blob from '@/components/BlobShapes.astro'
+import { site } from '@/lib/site'
 
 const services = (
   await getCollection('services', ({ data }) => data.listOnServicesPage)
 ).sort((a, b) => a.data.order - b.data.order)
+
+// One Service node per listed service, each addressable at its anchor on this
+// page. provider/areaServed tie them to the organisation and the regions it
+// actually covers, which is what local "cost consultant <place>" searches use.
+const serviceList = {
+  '@type': 'ItemList',
+  '@id': `${site.url}/services/#services`,
+  name: `${site.name} services`,
+  itemListElement: services.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      '@id': `${site.url}/services/#${service.id}`,
+      name: service.data.title,
+      description: service.data.summary,
+      url: `${site.url}/services/#${service.id}`,
+      serviceType: service.data.title,
+      provider: { '@id': `${site.url}/#organization` },
+      areaServed: [
+        { '@type': 'City', name: 'London' },
+        { '@type': 'City', name: 'Glasgow' },
+        { '@type': 'AdministrativeArea', name: 'South East England' },
+        { '@type': 'AdministrativeArea', name: 'Scotland' },
+      ],
+    },
+  })),
+}
 
 const accentDot = {
   orange: 'bg-orange',
@@ -23,8 +52,9 @@ const accentPanel = {
 ---
 
 <BaseLayout
-  title="Services"
-  description="Feasibility estimates, cost estimating, budget development, cost control, quantity surveying and value engineering for construction projects."
+  title="Cost Consultancy & Quantity Surveying Services"
+  description="Feasibility estimates, cost estimating, cost planning, cost control, quantity surveying and value engineering for construction projects in London and Scotland."
+  jsonLd={[serviceList]}
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services/' },
@@ -50,7 +80,7 @@ const accentPanel = {
       <ul class="space-y-10">
         {
           services.map((service, index) => (
-            <li class="card overflow-hidden">
+            <li id={service.id} class="card scroll-mt-28 overflow-hidden">
               {service.data.illustration && (
                 <Image
                   src={service.data.illustration}

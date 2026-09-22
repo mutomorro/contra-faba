@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css'
 import Seo from '@/components/Seo.astro'
+import type { SeoImage } from '@/lib/seo'
 import JsonLd from '@/components/JsonLd.astro'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
@@ -15,9 +16,13 @@ interface Props {
   description: string
   noindex?: boolean
   breadcrumbs?: Breadcrumb[]
+  image?: SeoImage
+  ogType?: 'website' | 'article'
+  /** Extra JSON-LD nodes for this page, merged into the site-wide @graph. */
+  jsonLd?: Record<string, unknown>[]
 }
 
-const { title, description, noindex, breadcrumbs } = Astro.props
+const { title, description, noindex, breadcrumbs, image, ogType, jsonLd } = Astro.props
 ---
 
 <!doctype html>
@@ -39,12 +44,22 @@ const { title, description, noindex, breadcrumbs } = Astro.props
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+    <!-- Google shows a site's favicon beside every result and needs at least
+         48px (a multiple of 48) to use it; smaller and it falls back to a
+         generic globe. -->
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#03333D" />
 
-    <Seo title={title} description={description} noindex={noindex} />
-    <JsonLd breadcrumbs={breadcrumbs} />
+    <Seo
+      title={title}
+      description={description}
+      noindex={noindex}
+      image={image}
+      ogType={ogType}
+    />
+    <JsonLd breadcrumbs={breadcrumbs} nodes={jsonLd} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
